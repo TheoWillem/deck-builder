@@ -1,4 +1,10 @@
 [
     { "name": "Mage", "cost": 3, "faction": "Magicien", "image": "mage.jpg" },
-    { "name": "Orgre", "cost": 5, "faction": "Monstre", "image": "orgre.jpg" }
+    { "name": "Orgre", "cost": 5, "faction": "Monstre", "image": "orgre.jpg" },
+    { "name": "Papillon Vert", "cost": 2, "faction": "Nature", "image": "papillon_vert.jpg" },
+    { "name": "Legendaire", "cost": 8, "faction": "Legendaire", "image": "legendaire.jpg" },
+    { "name": "Archer", "cost": 4, "faction": "Humain", "image": "archer.jpg" },
+    { "name": "Dragon", "cost": 10, "faction": "Dragon", "image": "dragon.jpg" },
+    { "name": "Gobelin", "cost": 1, "faction": "Monstre", "image": "gobelin.jpg" },
+    { "name": "Elfe", "cost": 3, "faction": "Nature", "image": "elfe.jpg" }
 ]

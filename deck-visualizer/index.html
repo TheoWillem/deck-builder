@@ -1,12 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Visualiseur de Deck</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualiseur de Deck - Cartes</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Votre Deck</h1>
-    <div id="deck-container"></div>
+    <div class="container">
+        <header>
+            <h1>🃏 Visualiseur de Deck</h1>
+            <div class="url-display">
+                <label for="deck-url">URL du deck :</label>
+                <input type="text" id="deck-url" readonly>
+                <button id="copy-url">📋 Copier</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="available-cards-section">
+                <h2>Cartes Disponibles</h2>
+                <div class="filter-controls">
+                    <select id="faction-filter">
+                        <option value="">Toutes les factions</option>
+                    </select>
+                    <input type="text" id="search-filter" placeholder="Rechercher une carte...">
+                </div>
+                <div id="available-cards" class="cards-grid"></div>
+            </div>
+
+            <div class="deck-section">
+                <h2>Votre Deck <span id="deck-count">(0 cartes)</span></h2>
+                <div class="deck-controls">
+                    <button id="clear-deck">🗑️ Vider le deck</button>
+                    <button id="load-example">📝 Charger exemple</button>
+                </div>
+                <div id="deck-container" class="cards-grid"></div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

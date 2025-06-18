@@ -1,1 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Deck - Visualiseur de Deck de Cartes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .landing-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .hero-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero-emoji {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: #718096;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 30px 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-emoji {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            color: #4a5568;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .feature p {
+            color: #718096;
+            line-height: 1.5;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 20px 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(66, 153, 225, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(66, 153, 225, 0.4);
+        }
+
+        .secondary-button {
+            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+            box-shadow: 0 8px 25px rgba(56, 161, 105, 0.3);
+        }
+
+        .secondary-button:hover {
+            box-shadow: 0 12px 35px rgba(56, 161, 105, 0.4);
+        }
+
+        .example-url {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 30px 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #4a5568;
+            border-left: 4px solid #4299e1;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-card {
+                padding: 40px 20px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-button {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="landing-container">
+        <div class="hero-card">
+            <span class="hero-emoji">🃏</span>
+            <h1 class="hero-title">Show Deck</h1>
+            <p class="hero-subtitle">
+                Créez, visualisez et partagez vos decks de cartes facilement.<br>
+                Construisez votre deck parfait et générez des URLs partageables !
+            </p>
+
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-emoji">🔗</div>
+                    <h3>URLs Partageables</h3>
+                    <p>Générez des liens directs vers vos decks que vous pouvez partager avec vos amis</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-emoji">🎯</div>
+                    <h3>Interface Intuitive</h3>
+                    <p>Cliquez simplement sur les cartes pour construire votre deck, filtrez par faction</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-emoji">⚡</div>
+                    <h3>Temps Réel</h3>
+                    <p>L'URL se met à jour automatiquement pendant que vous construisez votre deck</p>
+                </div>
+            </div>
+
+            <div class="example-url">
+                <strong>Exemple d'URL :</strong><br>
+                <code>http://localhost/deck-visualizer/#2xMage+3xOrgre+6xPapillon_Vert+1xLegendaire</code>
+            </div>
+
+            <div style="margin-top: 40px;">
+                <a href="deck-visualizer/" class="cta-button">
+                    🚀 Commencer maintenant
+                </a>
+                <a href="deck-visualizer/#2xMage+3xOrgre+6xPapillon_Vert+1xLegendaire" class="cta-button secondary-button">
+                    📝 Voir un exemple
+                </a>
+            </div>
+
+            <div style="margin-top: 40px; padding-top: 30px; border-top: 2px solid #e2e8f0;">
+                <h2 style="color: #4a5568; margin-bottom: 20px;">Comment ça marche ?</h2>
+                <div style="text-align: left; max-width: 600px; margin: 0 auto;">
+                    <p style="margin-bottom: 15px; color: #718096;">
+                        <strong>1.</strong> Cliquez sur les cartes disponibles pour les ajouter à votre deck
+                    </p>
+                    <p style="margin-bottom: 15px; color: #718096;">
+                        <strong>2.</strong> L'URL se génère automatiquement avec le format : quantité x nom_de_carte
+                    </p>
+                    <p style="margin-bottom: 15px; color: #718096;">
+                        <strong>3.</strong> Copiez et partagez l'URL avec qui vous voulez !
+                    </p>
+                    <p style="color: #718096;">
+                        <strong>4.</strong> Toute personne avec l'URL verra exactement le même deck
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
