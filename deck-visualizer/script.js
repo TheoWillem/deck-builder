@@ -18,7 +18,7 @@ function displayDeck(deck) {
         const cardElement = document.createElement("div");
         cardElement.className = "card";
         cardElement.innerHTML = `
-            <img src="images/${card.name}.png" alt="${card.name}">
+            <img src="images/${card.name}.jpg" alt="${card.name}">
             <span class="quantity">${card.quantity}x</span>
             <span class="name">${card.name}</span>
         `;
