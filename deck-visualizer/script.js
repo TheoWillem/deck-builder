@@ -31,3 +31,29 @@ window.addEventListener("load", () => {
     const deck = getDeckFromURL();
     displayDeck(deck);
 });
+
+// 3. Gestion du clic sur une carte
+document.querySelectorAll(".available-card").forEach(card => {
+    card.addEventListener("click", () => {
+        const cardName = card.getAttribute("data-name");
+        const currentDeck = getDeckFromURL();
+        
+        // Si la carte est déjà dans le deck, on incrémente la quantité
+        const existingCard = currentDeck.find(c => c.name === cardName);
+        if (existingCard) {
+            existingCard.quantity++;
+        } else {
+            currentDeck.push({ quantity: 1, name: cardName });
+        }
+
+        // Met à jour l'URL
+        updateDeckURL(currentDeck);
+        displayDeck(currentDeck);
+    });
+});
+
+// Met à jour l'URL sans recharger la page
+function updateDeckURL(deck) {
+    const deckCode = deck.map(c => `${c.quantity}x${c.name.replace(/ /g, "_")}`).join("+");
+    window.location.hash = deckCode;
+}
