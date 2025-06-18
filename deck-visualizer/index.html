@@ -6,24 +6,24 @@
     <title>Cards & Tankards - Deck Builder</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1><a href="../" class="home-link">⚔️ Cards & Tankards ⚔️</a></h1>
+            <h1><a href="../" class="home-link">🍻 Cards & Tankards 🍻</a></h1>
             <div class="deck-info">
                 <div class="deck-name-and-factions">
                     <div class="deck-name-section">
-                        <label for="deck-name">📜 Nom du deck:</label>
-                        <input type="text" id="deck-name" placeholder="Mon deck légendaire..." maxlength="50">
+                        <label for="deck-name">📜 Deck name:</label>
+                        <input type="text" id="deck-name" placeholder="My legendary deck..." maxlength="50">
                     </div>
                     <div class="faction-selectors">
                         <div class="faction-select">
-                            <label for="primary-faction">⚔️ Principale:</label>
+                            <label for="primary-faction">⚔️ Primary:</label>
                             <select id="primary-faction">
-                                <option value="">Choisir...</option>
+                                <option value="">Choose...</option>
                                 <option value="DM">🟣 DM</option>
                                 <option value="PG">🔴 PG</option>
                                 <option value="WH">🟢 WH</option>
@@ -32,9 +32,9 @@
                             </select>
                         </div>
                         <div class="faction-select">
-                            <label for="secondary-faction">🛡️ Secondaire:</label>
+                            <label for="secondary-faction">🛡️ Secondary:</label>
                             <select id="secondary-faction">
-                                <option value="">Aucune</option>
+                                <option value="">None</option>
                                 <option value="DM">🟣 DM</option>
                                 <option value="PG">🔴 PG</option>
                                 <option value="WH">🟢 WH</option>
@@ -50,6 +50,7 @@
                 <div class="url-input-container">
                     <input type="text" id="deck-url" readonly>
                     <button id="copy-url">📜 Copy</button>
+                    <button id="copy-decklist">📋 Copy Text Decklist</button>
                 </div>
             </div>
         </header>
@@ -68,7 +69,10 @@
 
             <div class="deck-section">
                 <div class="deck-header">
-                    <h2>⚔️ Your Deck <span id="deck-count">(0/40 cards)</span></h2>
+                    <div class="deck-header-text">
+                        <h2>⚔️ Your Deck</h2>
+                        <div id="deck-count" class="deck-count">(0/40 cards)</div>
+                    </div>
                     <button id="clear-deck">🗑️</button>
                 </div>
                 <div id="deck-container" class="cards-grid"></div>

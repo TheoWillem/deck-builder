@@ -45,14 +45,22 @@ class DeckVisualizer {
 
     setupEventListeners() {
         // Copy URL
-        document.getElementById('copy-url').addEventListener('click', () => {
+        document.getElementById('copy-url').addEventListener('click', (e) => {
+            this.animateButtonPress(e.target);
             this.deckUrlInput.select();
             document.execCommand('copy');
             this.showToast('URL copied!');
         });
 
+        // Copy Decklist
+        document.getElementById('copy-decklist').addEventListener('click', (e) => {
+            this.animateButtonPress(e.target);
+            this.copyDecklist();
+        });
+
         // Clear deck
-        document.getElementById('clear-deck').addEventListener('click', () => {
+        document.getElementById('clear-deck').addEventListener('click', (e) => {
+            this.animateButtonPress(e.target);
             this.currentDeck = {};
             this.deckName = '';
             this.primaryFaction = '';
@@ -62,13 +70,13 @@ class DeckVisualizer {
             this.updateURL();
         });
 
-        // Filters - Met à jour SEULEMENT la collection, le deck reste inchangé
+        // Filters - Updates ONLY the collection, the deck remains unchanged
         this.factionFilter.addEventListener('change', () => {
-            this.displayAvailableCards(); // Seule la collection est mise à jour
+            this.displayAvailableCards(); // Only the collection is updated
         });
 
         this.searchFilter.addEventListener('input', () => {
-            this.displayAvailableCards(); // Seule la collection est mise à jour
+            this.displayAvailableCards(); // Only the collection is updated
         });
 
         // Deck info listeners
@@ -151,7 +159,7 @@ class DeckVisualizer {
         const card = this.cards.find(c => c.name === cardName);
         if (!card) return;
         
-        // Vérifier si la carte peut être ajoutée selon les factions sélectionnées
+        // Check if the card can be added according to the selected factions
         const allowedFactions = [this.primaryFaction, this.secondaryFaction, 'N'].filter(f => f);
         if (!allowedFactions.includes(card.faction)) {
             return;
@@ -159,9 +167,35 @@ class DeckVisualizer {
         
         const currentQuantity = this.currentDeck[cardName] || 0;
         
+        // Check maximum 3 copies per card
         if (currentQuantity >= 3) {
+            console.log('Max 3 copies reached for', card.name, card.id);
             this.shakeCard(card.id);
+            this.showCardPopup(card.id, 'Maximum 3 copies per card');
             return;
+        }
+        
+        // Check total deck limit (40 cards)
+        const totalCards = Object.values(this.currentDeck).reduce((sum, quantity) => sum + quantity, 0);
+        if (totalCards >= 40) {
+            this.shakeCard(card.id);
+            this.showCardPopup(card.id, 'Deck is full! Maximum 40 cards allowed.');
+            return;
+        }
+        
+        // Check secondary faction limit (10 cards)
+        if (card.faction === this.secondaryFaction) {
+            const secondaryFactionCards = Object.entries(this.currentDeck)
+                .reduce((sum, [cardName, quantity]) => {
+                    const deckCard = this.cards.find(c => c.name === cardName);
+                    return deckCard && deckCard.faction === this.secondaryFaction ? sum + quantity : sum;
+                }, 0);
+            
+            if (secondaryFactionCards >= 10) {
+                this.shakeCard(card.id);
+                this.showCardPopup(card.id, `Max 10 ${this.secondaryFaction} cards allowed`);
+                return;
+            }
         }
         
         if (this.currentDeck[cardName]) {
@@ -187,11 +221,13 @@ class DeckVisualizer {
     }
 
     cleanDeckByFactions() {
-        // Déterminer les factions autorisées (factions sélectionnées + Nature)
+        // Determine allowed factions (selected factions + Neutral)
         const allowedFactions = [this.primaryFaction, this.secondaryFaction, 'N'].filter(f => f);
         
-        // Parcourir toutes les cartes du deck
+        // Go through all cards in the deck
         const cardsToRemove = [];
+        const cardsToReduce = [];
+        
         for (const cardName in this.currentDeck) {
             const card = this.cards.find(c => c.name === cardName);
             if (card && !allowedFactions.includes(card.faction)) {
@@ -199,15 +235,52 @@ class DeckVisualizer {
             }
         }
         
-        // Supprimer les cartes non autorisées
+        // Remove unauthorized cards
         cardsToRemove.forEach(cardName => {
             delete this.currentDeck[cardName];
         });
         
-        // Mettre à jour l'affichage si des cartes ont été supprimées
-        if (cardsToRemove.length > 0) {
+        // Check secondary faction limit and reduce if necessary
+        if (this.secondaryFaction) {
+            let secondaryCount = 0;
+            const secondaryCards = [];
+            
+            for (const [cardName, quantity] of Object.entries(this.currentDeck)) {
+                const card = this.cards.find(c => c.name === cardName);
+                if (card && card.faction === this.secondaryFaction) {
+                    secondaryCount += quantity;
+                    secondaryCards.push({ cardName, quantity });
+                }
+            }
+            
+            // If we have more than 10 secondary faction cards, remove excess
+            if (secondaryCount > 10) {
+                let toRemove = secondaryCount - 10;
+                
+                // Remove cards starting from the end (LIFO approach)
+                for (let i = secondaryCards.length - 1; i >= 0 && toRemove > 0; i--) {
+                    const { cardName, quantity } = secondaryCards[i];
+                    const reduction = Math.min(quantity, toRemove);
+                    
+                    this.currentDeck[cardName] -= reduction;
+                    if (this.currentDeck[cardName] <= 0) {
+                        delete this.currentDeck[cardName];
+                    }
+                    
+                    toRemove -= reduction;
+                    cardsToReduce.push(cardName);
+                }
+            }
+        }
+        
+        // Update display if cards have been removed or reduced
+        if (cardsToRemove.length > 0 || cardsToReduce.length > 0) {
             this.updateDisplay();
             this.updateDeckCount();
+            
+            if (cardsToReduce.length > 0) {
+                this.showToast(`Some secondary faction cards were removed to respect the 10-card limit.`);
+            }
         }
     }
 
@@ -243,8 +316,8 @@ class DeckVisualizer {
     }
 
     updateDisplay() {
-        this.displayAvailableCards(); // Mise à jour de la collection pour afficher les bonnes quantités
-        this.displayDeckCards(); // Mise à jour UNIQUEMENT du deck
+        this.displayAvailableCards(); // Update collection to display correct quantities
+        this.displayDeckCards(); // Update ONLY the deck
         this.updateDeckURL();
         this.updateDeckCount();
     }
@@ -259,16 +332,16 @@ class DeckVisualizer {
         const filteredCards = this.getFilteredCards();
         const grid = document.getElementById('available-cards');
         
-        // La collection affiche TOUJOURS toutes les cartes (filtrées)
+        // The collection ALWAYS displays all cards (filtered)
         grid.innerHTML = filteredCards.map(card => this.generateCardHTML(card)).join('');
         
-        // Clic pour AJOUTER au deck (la carte RESTE dans la collection)
+        // Click to ADD to deck (the card REMAINS in the collection)
         grid.querySelectorAll('.card').forEach(cardElement => {
             cardElement.addEventListener('click', () => {
                 const cardId = parseInt(cardElement.dataset.cardId);
                 const card = this.cards.find(c => c.id === cardId);
                 if (card) {
-                    this.addCardToDeck(card.name); // Les messages d'erreur sont gérés dans addCardToDeck
+                    this.addCardToDeck(card.name); // Error messages are handled in addCardToDeck
                 }
     });
 });
@@ -306,6 +379,7 @@ class DeckVisualizer {
                 if (removeBtn) {
                     removeBtn.addEventListener('click', (e) => {
                         e.stopPropagation();
+                        this.animateButtonPress(removeBtn);
                         this.removeCardFromDeck(card.name);
                     });
                 }
@@ -316,13 +390,13 @@ class DeckVisualizer {
     generateCardHTML(card, quantity = 0) {
         const imagePath = card.image ? `../card-database/${card.image}` : null;
         
-        // Pour les cartes de la collection, on affiche la quantité actuelle dans le deck
+        // For collection cards, display the current quantity in the deck
         let displayQuantity = quantity;
         if (quantity === 0 && this.currentDeck[card.name]) {
             displayQuantity = this.currentDeck[card.name];
         }
         
-        // Vérifier si la carte peut être ajoutée selon les factions sélectionnées
+        // Check if the card can be added according to the selected factions
         const allowedFactions = [this.primaryFaction, this.secondaryFaction, 'N'].filter(f => f);
         const isCardAllowed = allowedFactions.includes(card.faction);
         const disabledClass = (quantity === 0 && !isCardAllowed) ? 'card-disabled' : '';
@@ -347,7 +421,25 @@ class DeckVisualizer {
 
     updateDeckCount() {
         const totalCards = Object.values(this.currentDeck).reduce((sum, quantity) => sum + quantity, 0);
-        this.deckCountSpan.textContent = `(${totalCards}/40 cards)`;
+        
+        // Calculate secondary faction cards count
+        let secondaryCount = 0;
+        if (this.secondaryFaction) {
+            secondaryCount = Object.entries(this.currentDeck)
+                .reduce((sum, [cardName, quantity]) => {
+                    const card = this.cards.find(c => c.name === cardName);
+                    return card && card.faction === this.secondaryFaction ? sum + quantity : sum;
+                }, 0);
+        }
+        
+        // Update deck count display with HTML for different font sizes
+        let countHTML = `(<span style="opacity: 0.7;">${totalCards}/40</span> cards`;
+        if (this.secondaryFaction && secondaryCount > 0) {
+            countHTML += `, <span style="opacity: 0.7;">${secondaryCount}/10</span> secondary`;
+        }
+        countHTML += ')';
+        
+        this.deckCountSpan.innerHTML = countHTML;
     }
 
     populateFactionFilter() {
@@ -369,7 +461,7 @@ class DeckVisualizer {
     }
 
     showToast(message) {
-        // Créer ou récupérer le conteneur de toasts
+        // Create or retrieve the toast container
         let toastContainer = document.getElementById('toast-container');
         if (!toastContainer) {
             toastContainer = document.createElement('div');
@@ -401,7 +493,7 @@ class DeckVisualizer {
             transform: translateX(100%);
             transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
             opacity: 0;
-            font-family: 'Cinzel', serif;
+            font-family: 'Crimson Text', serif;
             max-width: 300px;
             word-wrap: break-word;
         `;
@@ -422,7 +514,7 @@ class DeckVisualizer {
                 if (toast.parentNode) {
                     toastContainer.removeChild(toast);
                 }
-                // Supprimer le conteneur s'il est vide
+                // Remove the container if it's empty
                 if (toastContainer.children.length === 0) {
                     document.body.removeChild(toastContainer);
                 }
@@ -440,13 +532,186 @@ class DeckVisualizer {
         // Ajouter les classes d'animation
         cardElement.classList.add('shaking', 'shake-red-flash');
 
-        // Supprimer les classes après l'animation
+        // Remove classes after animation
         setTimeout(() => {
             cardElement.classList.remove('shaking', 'shake-red-flash');
         }, 600);
     }
 
+    showCardPopup(cardId, message) {
+        console.log('Showing popup for card', cardId, 'with message:', message);
+        const cardElement = document.querySelector(`[data-card-id="${cardId}"]`);
+        if (!cardElement) {
+            console.log('Card element not found for ID:', cardId);
+            return;
+        }
 
+        // Remove any existing popups (not just on this card but all old ones)
+        document.querySelectorAll('.card-popup').forEach(popup => popup.remove());
+
+        // Create popup element
+        const popup = document.createElement('div');
+        popup.className = 'card-popup';
+        popup.textContent = message;
+        
+        // Use fixed positioning relative to the viewport instead of absolute
+        const cardRect = cardElement.getBoundingClientRect();
+        popup.style.cssText = `
+            position: fixed;
+            top: ${cardRect.top - 50}px;
+            left: ${cardRect.left + cardRect.width / 2}px;
+            transform: translateX(-50%);
+            background: #8b1538;
+            color: #ffcccb;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+            border: 2px solid #a0184a;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+            font-family: 'Crimson Text', serif;
+            white-space: nowrap;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateX(-50%) translateY(-10px);
+            transition: all 0.3s ease-in-out;
+            pointer-events: none;
+        `;
+
+        // Add triangle pointer
+        const triangle = document.createElement('div');
+        triangle.style.cssText = `
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #8b1538;
+        `;
+        popup.appendChild(triangle);
+
+        // Append to body instead of card to avoid overflow issues
+        document.body.appendChild(popup);
+
+        // Animate in
+        setTimeout(() => {
+            popup.style.opacity = '1';
+            popup.style.transform = 'translateX(-50%) translateY(0)';
+        }, 10);
+
+        // Animate out and remove
+        setTimeout(() => {
+            popup.style.opacity = '0';
+            popup.style.transform = 'translateX(-50%) translateY(-10px)';
+            setTimeout(() => {
+                if (popup.parentNode) {
+                    popup.remove();
+                }
+            }, 300);
+        }, 2500);
+    }
+
+    copyDecklist() {
+        if (Object.keys(this.currentDeck).length === 0) {
+            this.showToast('No cards in deck!');
+            return;
+        }
+
+        // Map faction codes to full names
+        const factionNames = {
+            'DM': 'DM',
+            'PG': 'PG', 
+            'WH': 'WH',
+            'AO': 'AO',
+            'N': 'Neutral'
+        };
+
+        // Group cards by faction
+        const cardsByFaction = {};
+        
+        for (const [cardName, quantity] of Object.entries(this.currentDeck)) {
+            const card = this.cards.find(c => c.name === cardName);
+            if (card) {
+                const factionName = factionNames[card.faction] || card.faction;
+                if (!cardsByFaction[factionName]) {
+                    cardsByFaction[factionName] = [];
+                }
+                cardsByFaction[factionName].push({ name: cardName, quantity });
+            }
+        }
+
+        // Sort factions in preferred order
+        const factionOrder = ['DM', 'PG', 'WH', 'AO', 'Neutral'];
+        let decklistText = '';
+
+        factionOrder.forEach(factionName => {
+            if (cardsByFaction[factionName]) {
+                decklistText += `${factionName} cards:\n`;
+                
+                // Sort cards alphabetically within each faction
+                cardsByFaction[factionName]
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .forEach(card => {
+                        decklistText += `${card.quantity}x ${card.name}\n`;
+                    });
+                
+                decklistText += '\n'; // Empty line between factions
+            }
+        });
+
+        // Remove trailing newlines
+        decklistText = decklistText.trim();
+
+        // Copy to clipboard
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(decklistText).then(() => {
+                this.showToast('Decklist copied!');
+            }).catch(err => {
+                console.error('Failed to copy decklist:', err);
+                this.fallbackCopyDecklist(decklistText);
+            });
+        } else {
+            this.fallbackCopyDecklist(decklistText);
+        }
+    }
+
+    fallbackCopyDecklist(text) {
+        // Fallback method for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+            document.execCommand('copy');
+            this.showToast('Decklist copied!');
+        } catch (err) {
+            console.error('Fallback copy failed:', err);
+            this.showToast('Failed to copy decklist');
+        }
+        
+        document.body.removeChild(textArea);
+    }
+
+    animateButtonPress(button) {
+        // Éviter les animations multiples simultanées
+        if (button.classList.contains('button-pressed')) return;
+        
+        button.classList.add('button-pressed');
+        
+        // Retirer la classe après l'animation
+        setTimeout(() => {
+            button.classList.remove('button-pressed');
+        }, 150); // Durée de l'animation
+    }
 
     getFilteredCards() {
         const factionFilter = this.factionFilter.value;
