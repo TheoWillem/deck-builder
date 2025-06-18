@@ -5,224 +5,819 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Cinzel', 'Times New Roman', serif;
+    background: 
+        /* Lueur chaleureuse centrale */
+        radial-gradient(ellipse at 50% 50%, rgba(255, 180, 80, 0.12), transparent 60%),
+        /* Fumée de cheminée plus douce */
+        radial-gradient(ellipse at 20% 0%, rgba(160, 140, 120, 0.08), transparent 40%),
+        radial-gradient(ellipse at 80% 0%, rgba(180, 150, 130, 0.06), transparent 35%),
+        /* Lueur de feu de cheminée plus chaude */
+        radial-gradient(circle at 10% 90%, rgba(255, 120, 40, 0.25), transparent 50%),
+        radial-gradient(circle at 90% 90%, rgba(255, 160, 60, 0.20), transparent 45%),
+        /* Lumière de chandelles plus chaleureuse */
+        radial-gradient(circle at 30% 20%, rgba(255, 200, 80, 0.15), transparent 30%),
+        radial-gradient(circle at 70% 25%, rgba(255, 220, 100, 0.12), transparent 25%),
+        /* Fond principal plus chaleureux */
+        linear-gradient(135deg, #2a1810 0%, #3d251a 30%, #2a1810 60%, #1f140c 100%);
     min-height: 100vh;
-    color: #333;
+    color: #ffd700;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Effet de flammes de cheminée animées plus chaudes */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        /* Flammes dansantes plus chaudes */
+        radial-gradient(ellipse at 15% 85%, rgba(255, 120, 30, 0.3), transparent 40%),
+        radial-gradient(ellipse at 85% 85%, rgba(255, 180, 60, 0.25), transparent 35%),
+        radial-gradient(ellipse at 50% 95%, rgba(255, 140, 80, 0.2), transparent 30%),
+        /* Scintillement de chandelles plus chaleureux */
+        radial-gradient(ellipse at 25% 15%, rgba(255, 200, 80, 0.18), transparent 20%),
+        radial-gradient(ellipse at 75% 20%, rgba(255, 220, 100, 0.15), transparent 18%);
+    pointer-events: none;
+    z-index: -1;
+    animation: tavernFire 6s ease-in-out infinite;
+}
+
+/* Particules de fumée */
+body::after {
+    content: '';
+    position: fixed;
+    top: -10%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(2px 2px at 20% 30%, rgba(139, 134, 128, 0.3), transparent),
+        radial-gradient(2px 2px at 40% 70%, rgba(139, 134, 128, 0.2), transparent),
+        radial-gradient(1px 1px at 80% 10%, rgba(139, 134, 128, 0.3), transparent),
+        radial-gradient(1px 1px at 90% 40%, rgba(139, 134, 128, 0.2), transparent);
+    background-size: 200px 200px, 150px 150px, 100px 100px, 120px 120px;
+    pointer-events: none;
+    z-index: -1;
+    animation: smoke 20s linear infinite;
+}
+
+@keyframes tavernFire {
+    0%, 100% { 
+        opacity: 1;
+        filter: blur(0px);
+    }
+    25% { 
+        opacity: 0.8;
+        filter: blur(0.5px);
+    }
+    50% { 
+        opacity: 1.2;
+        filter: blur(0px);
+    }
+    75% { 
+        opacity: 0.9;
+        filter: blur(0.3px);
+    }
+}
+
+@keyframes smoke {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-100px) rotate(360deg); }
 }
 
 .container {
-    max-width: 1400px;
+    max-width: 1600px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 15px;
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 header {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 20px;
-    border-radius: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
+    background: 
+        linear-gradient(145deg, 
+            rgba(160, 90, 40, 0.95) 0%, 
+            rgba(120, 80, 45, 0.98) 50%, 
+            rgba(100, 65, 35, 0.95) 100%);
+    padding: 20px 25px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    /* Bordure métal forgé plus chaude */
+    box-shadow: 
+        0 15px 30px rgba(0, 0, 0, 0.7),
+        inset 0 3px 8px rgba(255, 200, 80, 0.3),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+        0 0 30px rgba(255, 180, 60, 0.25);
+    border: 3px solid;
+    border-image: linear-gradient(45deg, #b8860b, #ffd700, #daa520, #8b6914) 1;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+/* Effet de clous de métal */
+header::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    right: 15px;
+    bottom: 10px;
+    border: 1px dotted rgba(218, 165, 32, 0.4);
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+/* Clous aux coins */
+header::after {
+    content: '⚫ ⚫ ⚫ ⚫';
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    color: rgba(139, 105, 20, 0.6);
+    font-size: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    pointer-events: none;
+    letter-spacing: -2px;
 }
 
 header h1 {
-    color: #4a5568;
-    margin-bottom: 15px;
+    color: #ffd700;
+    margin-bottom: 20px;
     text-align: center;
+    font-size: 2.4rem;
+    text-shadow: 
+        4px 4px 12px rgba(0, 0, 0, 0.95),
+        0 0 20px rgba(255, 215, 0, 0.8),
+        0 0 40px rgba(255, 140, 0, 0.4),
+        2px 2px 8px rgba(0, 0, 0, 0.9);
+    font-weight: 700;
+    letter-spacing: 3px;
+    position: relative;
+    z-index: 1;
+}
+
+.home-link {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.home-link:hover {
+    color: #fff8dc;
+    transform: scale(1.02);
+    text-shadow: 
+        4px 4px 12px rgba(0, 0, 0, 0.95),
+        0 0 25px rgba(255, 215, 0, 0.9),
+        0 0 50px rgba(255, 140, 0, 0.6),
+        2px 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+.deck-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.deck-name-and-factions {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.deck-name-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.deck-name-section label {
+    font-family: 'Cinzel', serif;
+    color: #ffd700;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+#deck-name {
+    background: 
+        linear-gradient(145deg, 
+            rgba(160, 90, 40, 0.9) 0%, 
+            rgba(120, 80, 45, 0.95) 50%, 
+            rgba(100, 65, 35, 0.9) 100%);
+    border: 2px solid rgba(180, 140, 60, 0.8);
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffd700;
+    text-align: center;
+    width: 300px;
+    max-width: 100%;
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.5),
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        0 0 15px rgba(255, 180, 60, 0.2);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+#deck-name::placeholder {
+    color: rgba(255, 215, 0, 0.6);
+    font-style: italic;
+}
+
+#deck-name:focus {
+    outline: none;
+    border-color: #ffd700;
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.5),
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+.faction-selectors {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.faction-select {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.faction-select label {
+    font-family: 'Cinzel', serif;
+    color: #ffd700;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+#primary-faction, #secondary-faction {
+    background: 
+        linear-gradient(145deg, 
+            rgba(160, 90, 40, 0.9) 0%, 
+            rgba(120, 80, 45, 0.95) 50%, 
+            rgba(100, 65, 35, 0.9) 100%);
+    border: 2px solid rgba(180, 140, 60, 0.8);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ffd700;
+    width: 120px;
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.5),
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        0 0 10px rgba(255, 180, 60, 0.15);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+}
+
+#primary-faction:focus, #secondary-faction:focus {
+    outline: none;
+    border-color: #ffd700;
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.5),
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+#primary-faction option, #secondary-faction option {
+    background: rgba(42, 24, 16, 0.95);
+    color: #ffd700;
 }
 
 .url-display {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     align-items: center;
     flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
 }
 
 .url-display label {
     font-weight: 600;
-    color: #4a5568;
+    color: #ffd700;
+    text-shadow: 
+        3px 3px 8px rgba(0, 0, 0, 0.9),
+        1px 1px 4px rgba(0, 0, 0, 0.8);
+    font-size: 1rem;
 }
 
 #deck-url {
     flex: 1;
-    padding: 8px 12px;
-    border: 2px solid #e2e8f0;
+    padding: 10px 15px;
+    border: 2px solid rgba(139, 105, 20, 0.8);
     border-radius: 8px;
-    font-family: monospace;
-    font-size: 14px;
-    background: #f7fafc;
-    min-width: 300px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    background: 
+        linear-gradient(45deg, rgba(26, 16, 8, 0.98), rgba(20, 12, 6, 0.98));
+    color: #ffd700;
+    min-width: 250px;
+    box-shadow: 
+        inset 0 3px 8px rgba(0, 0, 0, 0.6),
+        0 2px 4px rgba(255, 140, 0, 0.2);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 #copy-url {
-    padding: 8px 15px;
-    background: #4299e1;
-    color: white;
-    border: none;
+    padding: 10px 18px;
+    background: 
+        linear-gradient(145deg, #b8860b, #daa520 50%, #b8860b);
+    color: #2c1810;
+    border: 2px solid #8b6914;
     border-radius: 8px;
     cursor: pointer;
-    font-weight: 600;
-    transition: background 0.3s;
+    font-weight: 700;
+    transition: all 0.3s;
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.4),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    font-size: 0.9rem;
 }
 
 #copy-url:hover {
-    background: #3182ce;
+    background: 
+        linear-gradient(145deg, #daa520, #ffd700 50%, #daa520);
+    transform: translateY(-2px);
+    box-shadow: 
+        0 6px 12px rgba(0, 0, 0, 0.5),
+        inset 0 2px 4px rgba(255, 255, 255, 0.4);
 }
 
 .main-content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 1fr; /* Collection = 2/3, Deck = 1/3 */
     gap: 20px;
+    flex: 1;
+    min-height: 0;
 }
 
 .available-cards-section,
 .deck-section {
-    background: rgba(255, 255, 255, 0.95);
+    background: 
+        linear-gradient(145deg, 
+            rgba(160, 90, 40, 0.9) 0%, 
+            rgba(120, 80, 45, 0.95) 50%, 
+            rgba(100, 65, 35, 0.9) 100%);
     padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    /* Effet taverne avec bordures en métal plus chaudes */
+    box-shadow: 
+        0 15px 30px rgba(0, 0, 0, 0.7),
+        inset 0 3px 8px rgba(255, 200, 80, 0.25),
+        inset 0 -2px 6px rgba(0, 0, 0, 0.4),
+        0 0 25px rgba(255, 180, 60, 0.2);
+    border: 3px solid;
+    border-image: linear-gradient(45deg, #8b6914, #b8860b, #daa520, #654321) 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+/* Bordure intérieure décorative */
+.available-cards-section::before,
+.deck-section::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    border: 1px dashed rgba(218, 165, 32, 0.3);
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+.deck-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.deck-header h2 {
+    color: #ffd700; /* Plus contrasté */
+    margin: 0; /* Supprime la marge par défaut */
+    font-size: 1.6rem;
+    text-shadow: 
+        4px 4px 10px rgba(0, 0, 0, 0.95), /* Ombre plus forte */
+        0 0 15px rgba(255, 215, 0, 0.7),
+        2px 2px 6px rgba(0, 0, 0, 0.9);
+    text-align: left; /* Alignement à gauche au lieu du centre */
+    border-bottom: 3px solid rgba(139, 105, 20, 0.6);
+    padding-bottom: 10px;
+    flex: 1; /* Prend tout l'espace disponible */
+}
+
+.available-cards-section h2,
+.deck-section h2:not(.deck-header h2) {
+    color: #ffd700; /* Plus contrasté */
+    margin-bottom: 15px;
+    font-size: 1.6rem;
+    text-shadow: 
+        4px 4px 10px rgba(0, 0, 0, 0.95), /* Ombre plus forte */
+        0 0 15px rgba(255, 215, 0, 0.7),
+        2px 2px 6px rgba(0, 0, 0, 0.9);
+    text-align: center;
+    border-bottom: 3px solid rgba(139, 105, 20, 0.6);
+    padding-bottom: 10px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
 }
 
 .filter-controls {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 12px;
+    margin-bottom: 15px;
     flex-wrap: wrap;
+    flex-shrink: 0;
 }
 
 #faction-filter,
 #search-filter {
     padding: 8px 12px;
-    border: 2px solid #e2e8f0;
+    border: 2px solid rgba(180, 140, 60, 0.7);
     border-radius: 8px;
-    background: white;
+    background: 
+        linear-gradient(145deg, 
+            rgba(160, 90, 40, 0.9) 0%, 
+            rgba(120, 80, 45, 0.95) 50%, 
+            rgba(100, 65, 35, 0.9) 100%);
+    color: #ffd700;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    box-shadow: 
+        inset 0 2px 6px rgba(0, 0, 0, 0.5),
+        0 2px 4px rgba(255, 180, 60, 0.3);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 #search-filter {
     flex: 1;
-    min-width: 200px;
+    min-width: 150px;
 }
 
-.deck-controls {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-}
-
-.deck-controls button {
-    padding: 8px 15px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s;
+#search-filter::placeholder {
+    color: rgba(255, 215, 0, 0.7); /* Plus contrasté */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 #clear-deck {
-    background: #e53e3e;
-    color: white;
+    padding: 10px 14px;
+    border: 2px solid #8b1538;
+    border-radius: 8px; /* Carré avec coins arrondis au lieu de rond */
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.3s;
+    font-family: 'Cinzel', serif;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    font-size: 1.4rem; /* Plus gros : 1.2rem → 1.4rem */
+    background: 
+        linear-gradient(145deg, #8b1538, #a0184a 50%, #8b1538);
+    color: #ffcccb;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    width: 48px; /* Plus gros : 40px → 48px */
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #clear-deck:hover {
-    background: #c53030;
-}
-
-#load-example {
-    background: #38a169;
-    color: white;
-}
-
-#load-example:hover {
-    background: #2f855a;
+    background: 
+        linear-gradient(145deg, #a0184a, #c71e3f 50%, #a0184a);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
 
 .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 15px;
-    max-height: 500px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    column-gap: 15px;
+    row-gap:85px;
     overflow-y: auto;
-    padding: 5px;
+    padding: 15px;
+    flex: 1;
+    min-height: 0;
+    align-content: start;
+    /* Scrollbar de taverne */
+    scrollbar-width: thin;
+    scrollbar-color: #8b6914 rgba(42, 24, 16, 0.8);
+}
+
+.cards-grid::-webkit-scrollbar {
+    width: 8px;
+}
+
+.cards-grid::-webkit-scrollbar-track {
+    background: 
+        linear-gradient(45deg, rgba(42, 24, 16, 0.8), rgba(34, 19, 12, 0.8));
+    border-radius: 4px;
+    border: 1px solid rgba(139, 105, 20, 0.5);
+}
+
+.cards-grid::-webkit-scrollbar-thumb {
+    background: 
+        linear-gradient(145deg, #8b6914, #b8860b 50%, #8b6914);
+    border-radius: 4px;
+    border: 1px solid #654321;
 }
 
 .card {
-    background: white;
-    border-radius: 12px;
-    padding: 15px;
+    background: 
+        linear-gradient(145deg, 
+            rgba(160, 82, 45, 0.95) 0%, 
+            rgba(139, 69, 19, 0.95) 50%, 
+            rgba(101, 67, 33, 0.95) 100%);
+    border-radius: 8px;
+    padding: 8px;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    /* Ombrage de carte posée sur table de taverne */
+    box-shadow: 
+        0 6px 15px rgba(0, 0, 0, 0.6),
+        inset 0 2px 4px rgba(255, 215, 0, 0.2),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.3),
+        0 0 8px rgba(255, 140, 0, 0.1);
     transition: all 0.3s ease;
-    border: 2px solid transparent;
+    border: 2px solid rgba(139, 105, 20, 0.6);
     cursor: pointer;
     position: relative;
+    overflow: hidden;
+    /* Tailles optimisées pour les images */
+    width: 100%;
+    aspect-ratio: 3/4;
+    justify-self: center;
+    max-width: 200px;
+}
+
+/* Effet de lueur magique */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 215, 0, 0.3), 
+        transparent);
+    transition: left 0.6s;
+}
+
+.card:hover::before {
+    left: 100%;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    border-color: #4299e1;
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.7),
+        0 0 25px rgba(255, 215, 0, 0.4),
+        inset 0 2px 8px rgba(255, 215, 0, 0.3);
+    border-color: #ffd700;
+    z-index: 10;
 }
 
 .card img {
     width: 100%;
-    height: 120px;
+    height: 100%;
     object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+    border-radius: 4px;
+    border: 1px solid rgba(139, 105, 20, 0.6);
+    background: 
+        linear-gradient(45deg, 
+            rgba(42, 24, 16, 0.9), 
+            rgba(83, 53, 27, 0.9));
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #999;
-    font-size: 12px;
+    color: rgba(255, 215, 0, 0.6);
+    font-size: 10px;
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.5),
+        0 1px 2px rgba(255, 140, 0, 0.2);
 }
 
-.card img:before {
-    content: "Image indisponible";
+.card-placeholder {
+    width: 100%;
+    height: 100%;
+    background: 
+        linear-gradient(45deg, 
+            rgba(42, 24, 16, 0.9), 
+            rgba(83, 53, 27, 0.9));
+    border-radius: 4px;
+    border: 1px solid rgba(139, 105, 20, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 215, 0, 0.6);
+    font-size: 10px;
+    text-align: center;
+    padding: 5px;
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.5),
+        0 1px 2px rgba(255, 140, 0, 0.2);
 }
 
-.card-name {
-    font-weight: 600;
-    color: #2d3748;
-    margin-bottom: 5px;
-    font-size: 14px;
-}
-
-.card-cost {
-    background: #4299e1;
-    color: white;
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 600;
-    display: inline-block;
-    margin-bottom: 5px;
-}
-
+/* Suppression des anciens styles qui ne sont plus nécessaires */
+.card-name,
+.card-cost,
 .card-faction {
-    color: #718096;
-    font-size: 12px;
-    font-style: italic;
+    display: none;
 }
 
 .quantity-badge {
     position: absolute;
-    top: -8px;
-    right: -8px;
-    background: #e53e3e;
-    color: white;
+    top: -0px;
+    right: -0px;
     border-radius: 50%;
-    width: 24px;
-    height: 24px;
+    width: 42px;
+    height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    border: 3px solid #654321;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.7),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    text-shadow: 
+        2px 2px 4px rgba(0, 0, 0, 0.9),
+        1px 1px 2px rgba(0, 0, 0, 0.8);
+    z-index: 2;
+    color: #ffffff;
+}
+
+/* Couleurs de fond par faction */
+.faction-dm-bg {
+    background: 
+        linear-gradient(145deg, #6a5acd, #8a2be2 50%, #6a5acd);
+}
+
+.faction-pg-bg {
+    background: 
+        linear-gradient(145deg, #b22222, #dc143c 50%, #b22222);
+}
+
+.faction-wh-bg {
+    background: 
+        linear-gradient(145deg, #228b22, #32cd32 50%, #228b22);
+}
+
+.faction-ao-bg {
+    background: 
+        linear-gradient(145deg, #4682b4, #5a9fd4 50%, #4682b4);
+}
+
+.faction-n-bg {
+    background: 
+        linear-gradient(145deg, #808080, #a0a0a0 50%, #808080);
+}
+
+/* Styles pour les cartes désactivées */
+.card-disabled {
+    opacity: 0.4;
+    filter: grayscale(60%);
+    cursor: not-allowed !important;
+    position: relative;
+}
+
+.card-disabled:hover {
+    transform: none !important;
+    box-shadow: 
+        0 8px 16px rgba(0, 0, 0, 0.4),
+        inset 0 2px 6px rgba(255, 200, 80, 0.15),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.disabled-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.disabled-message {
+    background: rgba(0, 0, 0, 0.85);
+    color: #ff6b6b;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+    font-family: 'Cinzel', serif;
+    text-align: center;
     font-weight: 600;
-    border: 2px solid white;
+    line-height: 1.2;
+    border: 1px solid rgba(255, 107, 107, 0.4);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    max-width: 90px;
+    word-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.disabled-emoji {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.disabled-text {
+    font-size: 0.55rem;
+    line-height: 1.1;
+}
+
+/* Animation pour les messages sur les cartes */
+@keyframes cardMessageFade {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* Animation de secousse pour les cartes */
+@keyframes shake {
+    0%, 100% { transform: rotate(0deg); }
+    10% { transform: rotate(-2deg); }
+    20% { transform: rotate(2deg); }
+    30% { transform: rotate(-2deg); }
+    40% { transform: rotate(2deg); }
+    50% { transform: rotate(-1deg); }
+    60% { transform: rotate(1deg); }
+    70% { transform: rotate(-1deg); }
+    80% { transform: rotate(1deg); }
+    90% { transform: rotate(0deg); }
+}
+
+/* Animation de clignotement rouge */
+@keyframes redFlash {
+    0%, 100% { 
+        background: inherit;
+        box-shadow: inherit;
+    }
+    25%, 75% { 
+        background: rgba(220, 20, 60, 0.3);
+        box-shadow: 0 0 20px rgba(220, 20, 60, 0.6), inset 0 0 20px rgba(220, 20, 60, 0.2);
+    }
+    50% { 
+        background: rgba(220, 20, 60, 0.5);
+        box-shadow: 0 0 25px rgba(220, 20, 60, 0.8), inset 0 0 25px rgba(220, 20, 60, 0.3);
+    }
+}
+
+/* Classes pour appliquer les animations */
+.shaking {
+    animation: shake 0.6s ease-in-out;
+    transform-origin: center center;
+}
+
+.shake-red-flash {
+    animation: shake 0.6s ease-in-out, redFlash 0.6s ease-in-out;
+    transform-origin: center center;
 }
 
 .deck-card {
@@ -230,22 +825,29 @@ header h1 {
 }
 
 .deck-card:hover {
-    border-color: #e53e3e;
+    border-color: #8b1538;
 }
 
 .deck-card .remove-btn {
     position: absolute;
-    top: 5px;
-    right: 5px;
-    background: #e53e3e;
-    color: white;
-    border: none;
+    top: 4px;
+    left: 4px;
+    background: 
+        linear-gradient(145deg, #8b1538, #a0184a 50%, #8b1538);
+    color: #ffcccb;
+    border: 1px solid #5d0e24;
     border-radius: 50%;
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: 700;
     display: none;
+    box-shadow: 
+        0 3px 6px rgba(0, 0, 0, 0.6),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+    z-index: 2;
 }
 
 .deck-card:hover .remove-btn {
@@ -255,20 +857,115 @@ header h1 {
 }
 
 #deck-count {
-    color: #4299e1;
+    color: #daa520; /* Plus contrasté */
     font-weight: normal;
+    text-shadow: 
+        2px 2px 6px rgba(0, 0, 0, 0.9),
+        1px 1px 3px rgba(0, 0, 0, 0.8);
 }
 
-.faction-magicien { border-left: 4px solid #9f7aea; }
-.faction-monstre { border-left: 4px solid #e53e3e; }
-.faction-nature { border-left: 4px solid #38a169; }
-.faction-legendaire { border-left: 4px solid #d69e2e; }
-.faction-humain { border-left: 4px solid #4299e1; }
-.faction-dragon { border-left: 4px solid #9f2f0a; }
+/* Empty deck style */
+.empty-deck {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: rgba(255, 215, 0, 0.6);
+    font-style: italic;
+    padding: 40px 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Theme by faction Cards & Tankards - Couleurs complètes */
+.faction-dm { 
+    border-left: 4px solid #6a5acd; /* Dark Magic - Violet */
+    border-top: 2px solid rgba(106, 90, 205, 0.3);
+    border-right: 2px solid rgba(106, 90, 205, 0.3);
+    border-bottom: 2px solid rgba(106, 90, 205, 0.3);
+}
+
+.faction-pg { 
+    border-left: 4px solid #b22222; /* Primitive & Goblin - Rouge */
+    border-top: 2px solid rgba(178, 34, 34, 0.3);
+    border-right: 2px solid rgba(178, 34, 34, 0.3);
+    border-bottom: 2px solid rgba(178, 34, 34, 0.3);
+}
+
+.faction-wh { 
+    border-left: 4px solid #228b22; /* White & Human - Vert */
+    border-top: 2px solid rgba(34, 139, 34, 0.3);
+    border-right: 2px solid rgba(34, 139, 34, 0.3);
+    border-bottom: 2px solid rgba(34, 139, 34, 0.3);
+}
+
+.faction-ao { 
+    border-left: 4px solid #4682b4; /* Ancient Ones - Bleu */
+    border-top: 2px solid rgba(70, 130, 180, 0.3);
+    border-right: 2px solid rgba(70, 130, 180, 0.3);
+    border-bottom: 2px solid rgba(70, 130, 180, 0.3);
+}
+
+.faction-n { 
+    border-left: 4px solid #808080; /* Nature - Gris */
+    border-top: 2px solid rgba(128, 128, 128, 0.3);
+    border-right: 2px solid rgba(128, 128, 128, 0.3);
+    border-bottom: 2px solid rgba(128, 128, 128, 0.3);
+}
+
+/* Green effect for White & Human cards */
+.faction-wh {
+    background: 
+        linear-gradient(145deg, 
+            rgba(34, 139, 34, 0.25) 0%, 
+            rgba(139, 69, 19, 0.9) 30%, 
+            rgba(101, 67, 33, 0.9) 70%, 
+            rgba(34, 139, 34, 0.25) 100%);
+}
+
+/* Mystical effect for Dark Magic cards */
+.faction-dm {
+    background: 
+        linear-gradient(145deg, 
+            rgba(106, 90, 205, 0.25) 0%, 
+            rgba(139, 69, 19, 0.9) 30%, 
+            rgba(101, 67, 33, 0.9) 70%, 
+            rgba(106, 90, 205, 0.25) 100%);
+}
+
+/* Primitive effect for Primitive & Goblin cards */
+.faction-pg {
+    background: 
+        linear-gradient(145deg, 
+            rgba(178, 34, 34, 0.25) 0%, 
+            rgba(139, 69, 19, 0.9) 30%, 
+            rgba(101, 67, 33, 0.9) 70%, 
+            rgba(178, 34, 34, 0.25) 100%);
+}
+
+/* Ancient effect for Ancient Ones cards */
+.faction-ao {
+    background: 
+        linear-gradient(145deg, 
+            rgba(70, 130, 180, 0.25) 0%, 
+            rgba(139, 69, 19, 0.9) 30%, 
+            rgba(101, 67, 33, 0.9) 70%, 
+            rgba(70, 130, 180, 0.25) 100%);
+}
+
+/* Natural effect for Nature cards */
+.faction-n {
+    background: 
+        linear-gradient(145deg, 
+            rgba(128, 128, 128, 0.25) 0%, 
+            rgba(139, 69, 19, 0.9) 30%, 
+            rgba(101, 67, 33, 0.9) 70%, 
+            rgba(128, 128, 128, 0.25) 100%);
+}
+
+
 
 @media (max-width: 768px) {
     .main-content {
         grid-template-columns: 1fr;
+        gap: 15px;
     }
     
     .url-display {
@@ -281,6 +978,67 @@ header h1 {
     }
     
     .cards-grid {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 12px;
+        padding: 12px;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .container {
+        padding: 10px;
+        height: 100vh;
+    }
+
+    header {
+        padding: 15px 20px;
+        margin-bottom: 10px;
+    }
+
+    .available-cards-section,
+    .deck-section {
+        padding: 15px;
+    }
+
+    .card {
+        max-width: 150px;
+        padding: 6px;
+    }
+
+    .quantity-badge {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+
+    .deck-name-and-factions {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .faction-selectors {
+        gap: 15px;
+        justify-content: center;
+    }
+
+    #primary-faction, #secondary-faction {
+        width: 110px;
+        font-size: 0.8rem;
+    }
+
+    .faction-select label {
+        font-size: 0.8rem;
+    }
+
+    #deck-name {
+        width: 250px;
+        font-size: 1rem;
+    }
+
+    .deck-info {
+        gap: 10px;
     }
 }

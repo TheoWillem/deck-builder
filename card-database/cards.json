@@ -1,10 +1,10 @@
 [
-    { "name": "Mage", "cost": 3, "faction": "Magicien", "image": "mage.jpg" },
-    { "name": "Orgre", "cost": 5, "faction": "Monstre", "image": "orgre.jpg" },
-    { "name": "Papillon Vert", "cost": 2, "faction": "Nature", "image": "papillon_vert.jpg" },
-    { "name": "Legendaire", "cost": 8, "faction": "Legendaire", "image": "legendaire.jpg" },
-    { "name": "Archer", "cost": 4, "faction": "Humain", "image": "archer.jpg" },
-    { "name": "Dragon", "cost": 10, "faction": "Dragon", "image": "dragon.jpg" },
-    { "name": "Gobelin", "cost": 1, "faction": "Monstre", "image": "gobelin.jpg" },
-    { "name": "Elfe", "cost": 3, "faction": "Nature", "image": "elfe.jpg" }
+    { "id": 1, "name": "Adventurer", "cost": 2, "faction": "N", "image": "Cards/Adventurer.png" },
+    { "id": 2, "name": "Killer Bee of Urwuste", "cost": 3, "faction": "WH", "image": "Cards/Killer_Bee_of_Urwuste.png" },
+    { "id": 3, "name": "Bighorn Packbeast", "cost": 4, "faction": "WH", "image": "Cards/Bighorn_Packbeast.png" },
+    { "id": 4, "name": "Acidic Overlord", "cost": 6, "faction": "WH", "image": "Cards/Acidic_Overlordpng.png" },
+    { "id": 5, "name": "Adventurous Farmhand", "cost": 2, "faction": "PG", "image": "Cards/Adventurous_Farmhandpng.png" },
+    { "id": 6, "name": "Breach of Terms", "cost": 3, "faction": "AO", "image": "Cards/Breach_of_Terms.png" },
+    { "id": 7, "name": "Great Revitalization", "cost": 4, "faction": "DM", "image": "Cards/Great_Revitalization.webp" },
+    { "id": 8, "name": "Kira, Heroine of Garsang", "cost": 5, "faction": "AO", "image": "Cards/Kira,_Heroine_of_Garsang.webp" }
 ]

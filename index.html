@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Show Deck - Visualiseur de Deck de Cartes</title>
+    <title>Cards & Tankards - Deck Builder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,122 +15,314 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Cinzel', 'Times New Roman', serif;
+            background: 
+                radial-gradient(circle at 30% 40%, rgba(139, 69, 19, 0.4), transparent),
+                radial-gradient(circle at 70% 80%, rgba(218, 165, 32, 0.3), transparent),
+                linear-gradient(135deg, #2c1810 0%, #1a0f0a 50%, #0f0a07 100%);
             min-height: 100vh;
-            color: #333;
+            color: #d4af37;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Candle flame effects */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 15% 30%, rgba(255, 140, 0, 0.15), transparent 60%),
+                radial-gradient(ellipse at 85% 70%, rgba(255, 140, 0, 0.15), transparent 60%),
+                radial-gradient(ellipse at 50% 10%, rgba(218, 165, 32, 0.1), transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+            animation: flicker 4s ease-in-out infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
         }
 
         .landing-container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 40px 20px;
             text-align: center;
         }
 
         .hero-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: linear-gradient(145deg, 
+                rgba(139, 69, 19, 0.95) 0%, 
+                rgba(101, 67, 33, 0.98) 50%, 
+                rgba(83, 53, 27, 0.95) 100%);
             padding: 60px 40px;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.6),
+                inset 0 2px 5px rgba(218, 165, 32, 0.3),
+                0 0 30px rgba(218, 165, 32, 0.2);
+            border: 3px solid rgba(218, 165, 32, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 3px,
+                rgba(218, 165, 32, 0.05) 3px,
+                rgba(218, 165, 32, 0.05) 6px
+            );
+            pointer-events: none;
         }
 
         .hero-title {
-            font-size: 3.5rem;
-            color: #4a5568;
+            font-size: 4rem;
+            color: #ffd700;
             margin-bottom: 20px;
             font-weight: 700;
+            text-shadow: 
+                4px 4px 12px rgba(0, 0, 0, 0.9),
+                0 0 20px rgba(255, 215, 0, 0.8),
+                2px 2px 6px rgba(0, 0, 0, 0.8);
+            letter-spacing: 3px;
+            position: relative;
+            z-index: 1;
         }
 
         .hero-emoji {
-            font-size: 4rem;
-            margin-bottom: 20px;
+            font-size: 5rem;
+            margin-bottom: 25px;
             display: block;
+            text-shadow: 
+                0 0 20px rgba(255, 215, 0, 0.7),
+                0 0 40px rgba(255, 140, 0, 0.4);
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { 
+                filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
+                text-shadow: 0 0 20px rgba(255, 215, 0, 0.7), 0 0 40px rgba(255, 140, 0, 0.4);
+            }
+            50% { 
+                filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.9));
+                text-shadow: 0 0 30px rgba(255, 215, 0, 0.9), 0 0 60px rgba(255, 140, 0, 0.6);
+            }
         }
 
         .hero-subtitle {
-            font-size: 1.4rem;
-            color: #718096;
+            font-size: 1.5rem;
+            color: #f5deb3;
             margin-bottom: 40px;
-            line-height: 1.6;
+            line-height: 1.7;
+            text-shadow: 
+                3px 3px 8px rgba(0, 0, 0, 0.9),
+                1px 1px 4px rgba(0, 0, 0, 0.8);
+            position: relative;
+            z-index: 1;
         }
 
         .features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
             margin: 40px 0;
+            position: relative;
+            z-index: 1;
         }
 
         .feature {
-            background: rgba(255, 255, 255, 0.7);
+            background: linear-gradient(145deg, 
+                rgba(139, 69, 19, 0.92) 0%, 
+                rgba(101, 67, 33, 0.95) 100%);
             padding: 30px 20px;
             border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 
+                0 10px 25px rgba(0, 0, 0, 0.4),
+                inset 0 2px 5px rgba(218, 165, 32, 0.2);
+            border: 2px solid rgba(218, 165, 32, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.5),
+                inset 0 2px 5px rgba(218, 165, 32, 0.3);
         }
 
         .feature-emoji {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 15px;
+            text-shadow: 
+                0 0 15px rgba(255, 215, 0, 0.6),
+                0 0 30px rgba(255, 140, 0, 0.3);
         }
 
         .feature h3 {
-            color: #4a5568;
-            margin-bottom: 10px;
-            font-size: 1.2rem;
+            color: #ffd700;
+            margin-bottom: 12px;
+            font-size: 1.3rem;
+            text-shadow: 
+                3px 3px 8px rgba(0, 0, 0, 0.9),
+                1px 1px 4px rgba(0, 0, 0, 0.8);
         }
 
         .feature p {
-            color: #718096;
-            line-height: 1.5;
+            color: #f5deb3;
+            line-height: 1.6;
+            text-shadow: 
+                2px 2px 6px rgba(0, 0, 0, 0.8),
+                1px 1px 3px rgba(0, 0, 0, 0.7);
         }
 
         .cta-button {
             display: inline-block;
-            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
-            color: white;
+            background: linear-gradient(145deg, #b8860b 0%, #8b6914 100%);
+            color: #2c1810;
             padding: 20px 40px;
             border-radius: 50px;
             text-decoration: none;
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin: 20px 10px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 20px 15px;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(66, 153, 225, 0.3);
+            box-shadow: 
+                0 8px 20px rgba(0, 0, 0, 0.4),
+                inset 0 2px 4px rgba(255, 255, 255, 0.2);
+            text-shadow: 
+                2px 2px 4px rgba(0, 0, 0, 0.6),
+                1px 1px 2px rgba(0, 0, 0, 0.8);
+            border: 2px solid rgba(218, 165, 32, 0.5);
+            position: relative;
+            z-index: 1;
         }
 
         .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(66, 153, 225, 0.4);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 
+                0 12px 30px rgba(0, 0, 0, 0.5),
+                inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            background: linear-gradient(145deg, #daa520 0%, #b8860b 100%);
         }
 
         .secondary-button {
-            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
-            box-shadow: 0 8px 25px rgba(56, 161, 105, 0.3);
+            background: linear-gradient(145deg, #228b22 0%, #196619 100%);
+            color: #90ee90;
         }
 
         .secondary-button:hover {
-            box-shadow: 0 12px 35px rgba(56, 161, 105, 0.4);
+            background: linear-gradient(145deg, #32cd32 0%, #228b22 100%);
         }
 
         .example-url {
-            background: #f7fafc;
-            padding: 15px;
-            border-radius: 10px;
+            background: rgba(34, 19, 12, 0.95);
+            padding: 20px;
+            border-radius: 12px;
             margin: 30px 0;
-            font-family: monospace;
+            font-family: 'Courier New', monospace;
             font-size: 0.9rem;
-            color: #4a5568;
-            border-left: 4px solid #4299e1;
+            color: #ffd700;
+            border-left: 4px solid #8b6914;
+            box-shadow: 
+                inset 0 2px 4px rgba(0, 0, 0, 0.4),
+                0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+        }
+
+        .example-link {
+            color: #daa520;
+            text-decoration: none;
+            display: block;
+            padding: 8px 12px;
+            margin-top: 8px;
+            background: rgba(218, 165, 32, 0.1);
+            border-radius: 6px;
+            border: 1px solid rgba(218, 165, 32, 0.3);
+            transition: all 0.3s ease;
+            word-break: break-all;
+        }
+
+        .example-link:hover {
+            background: rgba(218, 165, 32, 0.2);
+            border-color: rgba(218, 165, 32, 0.5);
+            color: #ffd700;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .example-link code {
+            color: inherit;
+            background: none;
+            font-size: inherit;
+        }
+
+        .tavern-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 3px solid rgba(218, 165, 32, 0.4);
+            position: relative;
+            z-index: 1;
+        }
+
+        .tavern-section h2 {
+            color: #ffd700;
+            margin-bottom: 25px;
+            font-size: 2.2rem;
+            text-shadow: 
+                4px 4px 10px rgba(0, 0, 0, 0.9),
+                0 0 15px rgba(255, 215, 0, 0.6);
+        }
+
+        .instructions {
+            text-align: left;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .instructions p {
+            margin-bottom: 18px;
+            color: #f5deb3;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            text-shadow: 
+                2px 2px 6px rgba(0, 0, 0, 0.8),
+                1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        .instructions strong {
+            color: #daa520;
+            text-shadow: 
+                2px 2px 6px rgba(0, 0, 0, 0.9),
+                1px 1px 3px rgba(0, 0, 0, 0.8);
         }
 
         @media (max-width: 768px) {
+            .landing-container {
+                max-width: 95%;
+                padding: 20px 15px;
+            }
+
             .hero-title {
-                font-size: 2.5rem;
+                font-size: 2.8rem;
             }
 
             .hero-card {
@@ -140,7 +335,16 @@
 
             .cta-button {
                 display: block;
-                margin: 10px 0;
+                margin: 15px 0;
+                font-size: 1.2rem;
+            }
+
+            .hero-emoji {
+                font-size: 4rem;
+            }
+
+            .instructions {
+                max-width: 100%;
             }
         }
     </style>
@@ -148,59 +352,40 @@
 <body>
     <div class="landing-container">
         <div class="hero-card">
-            <span class="hero-emoji">🃏</span>
-            <h1 class="hero-title">Show Deck</h1>
+            <span class="hero-emoji">🏛️⚔️🛡️</span>
+            <h1 class="hero-title">🍺 Cards & Tankards 🍺</h1>
             <p class="hero-subtitle">
-                Créez, visualisez et partagez vos decks de cartes facilement.<br>
-                Construisez votre deck parfait et générez des URLs partageables !
+                Build epic decks and share your strategies with the community.
+                <p>Create magical links to your decks that you can share with your fellow adventurers</p>
             </p>
 
-            <div class="features">
-                <div class="feature">
-                    <div class="feature-emoji">🔗</div>
-                    <h3>URLs Partageables</h3>
-                    <p>Générez des liens directs vers vos decks que vous pouvez partager avec vos amis</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-emoji">🎯</div>
-                    <h3>Interface Intuitive</h3>
-                    <p>Cliquez simplement sur les cartes pour construire votre deck, filtrez par faction</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-emoji">⚡</div>
-                    <h3>Temps Réel</h3>
-                    <p>L'URL se met à jour automatiquement pendant que vous construisez votre deck</p>
-                </div>
-            </div>
-
             <div class="example-url">
-                <strong>Exemple d'URL :</strong><br>
-                <code>http://localhost/deck-visualizer/#2xMage+3xOrgre+6xPapillon_Vert+1xLegendaire</code>
+                <strong>🧙‍♂️ Example magical link:</strong><br>
+                <a href="deck-visualizer/#name=Example+deck&primary=WH&secondary=AO&cards=3xKiller_Bee_of_Urwuste%2B3xBighorn_Packbeast%2B2xAcidic_Overlord%2B1xKira%2C_Heroine_of_Garsang%2B3xBreach_of_Terms%2B3xAdventurer" class="example-link">
+                    <code>deck-visualizer/#name=Example+deck&primary=WH&secondary=AO&cards=3xKiller_Bee_of_Urwuste%2B3xBighorn_Packbeast%2B2xAcidic_Overlord%2B1xKira%2C_Heroine_of_Garsang%2B3xBreach_of_Terms%2B3xAdventurer</code>
+                </a>
             </div>
 
             <div style="margin-top: 40px;">
                 <a href="deck-visualizer/" class="cta-button">
-                    🚀 Commencer maintenant
-                </a>
-                <a href="deck-visualizer/#2xMage+3xOrgre+6xPapillon_Vert+1xLegendaire" class="cta-button secondary-button">
-                    📝 Voir un exemple
+                    ⚔️ Build your deck
                 </a>
             </div>
 
-            <div style="margin-top: 40px; padding-top: 30px; border-top: 2px solid #e2e8f0;">
-                <h2 style="color: #4a5568; margin-bottom: 20px;">Comment ça marche ?</h2>
-                <div style="text-align: left; max-width: 600px; margin: 0 auto;">
-                    <p style="margin-bottom: 15px; color: #718096;">
-                        <strong>1.</strong> Cliquez sur les cartes disponibles pour les ajouter à votre deck
+            <div class="tavern-section">
+                <h2>🍻 Tavern Master's Guide</h2>
+                <div class="instructions">
+                    <p>
+                        <strong>1. Choose your cards:</strong> Browse the collection and click on cards to add them to your deck
                     </p>
-                    <p style="margin-bottom: 15px; color: #718096;">
-                        <strong>2.</strong> L'URL se génère automatiquement avec le format : quantité x nom_de_carte
+                    <p>
+                        <strong>2. Forge your strategy:</strong> The link is created automatically with the format: quantity x card_name
                     </p>
-                    <p style="margin-bottom: 15px; color: #718096;">
-                        <strong>3.</strong> Copiez et partagez l'URL avec qui vous voulez !
+                    <p>
+                        <strong>3. Share your deck:</strong> Copy the link and send it to your companions!
                     </p>
-                    <p style="color: #718096;">
-                        <strong>4.</strong> Toute personne avec l'URL verra exactement le même deck
+                    <p>
+                        <strong>4. Play together:</strong> Anyone with the link will see exactly the same deck
                     </p>
                 </div>
             </div>

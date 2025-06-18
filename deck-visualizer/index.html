@@ -1,39 +1,73 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualiseur de Deck - Cartes</title>
+    <title>Cards & Tankards - Deck Builder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🃏 Visualiseur de Deck</h1>
+            <h1><a href="../" class="home-link">⚔️ Cards & Tankards ⚔️</a></h1>
+            <div class="deck-info">
+                <div class="deck-name-and-factions">
+                    <div class="deck-name-section">
+                        <label for="deck-name">📜 Nom du deck:</label>
+                        <input type="text" id="deck-name" placeholder="Mon deck légendaire..." maxlength="50">
+                    </div>
+                    <div class="faction-selectors">
+                        <div class="faction-select">
+                            <label for="primary-faction">⚔️ Principale:</label>
+                            <select id="primary-faction">
+                                <option value="">Choisir...</option>
+                                <option value="DM">🟣 DM</option>
+                                <option value="PG">🔴 PG</option>
+                                <option value="WH">🟢 WH</option>
+                                <option value="AO">🔵 AO</option>
+                                <option value="N">⚫ N</option>
+                            </select>
+                        </div>
+                        <div class="faction-select">
+                            <label for="secondary-faction">🛡️ Secondaire:</label>
+                            <select id="secondary-faction">
+                                <option value="">Aucune</option>
+                                <option value="DM">🟣 DM</option>
+                                <option value="PG">🔴 PG</option>
+                                <option value="WH">🟢 WH</option>
+                                <option value="AO">🔵 AO</option>
+                                <option value="N">⚫ N</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="url-display">
-                <label for="deck-url">URL du deck :</label>
+                <label for="deck-url">🔗 Deck sharing link:</label>
                 <input type="text" id="deck-url" readonly>
-                <button id="copy-url">📋 Copier</button>
+                <button id="copy-url">📜 Copy</button>
             </div>
         </header>
 
         <div class="main-content">
             <div class="available-cards-section">
-                <h2>Cartes Disponibles</h2>
+                <h2>🃏 Card Collection</h2>
                 <div class="filter-controls">
                     <select id="faction-filter">
-                        <option value="">Toutes les factions</option>
+                        <option value="">All factions</option>
                     </select>
-                    <input type="text" id="search-filter" placeholder="Rechercher une carte...">
+                    <input type="text" id="search-filter" placeholder="🔍 Search for a card...">
                 </div>
                 <div id="available-cards" class="cards-grid"></div>
             </div>
 
             <div class="deck-section">
-                <h2>Votre Deck <span id="deck-count">(0 cartes)</span></h2>
-                <div class="deck-controls">
-                    <button id="clear-deck">🗑️ Vider le deck</button>
-                    <button id="load-example">📝 Charger exemple</button>
+                <div class="deck-header">
+                    <h2>⚔️ Your Deck <span id="deck-count">(0/40 cards)</span></h2>
+                    <button id="clear-deck">🗑️</button>
                 </div>
                 <div id="deck-container" class="cards-grid"></div>
             </div>
