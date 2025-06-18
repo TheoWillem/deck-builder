@@ -314,11 +314,16 @@ header h1 {
 
 .url-display {
     display: flex;
-    gap: 12px;
-    align-items: center;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 8px;
     position: relative;
     z-index: 1;
+}
+
+.url-input-container {
+    display: flex;
+    gap: 12px;
+    align-items: center;
 }
 
 .url-display label {
@@ -340,7 +345,7 @@ header h1 {
     background: 
         linear-gradient(45deg, rgba(26, 16, 8, 0.98), rgba(20, 12, 6, 0.98));
     color: #ffd700;
-    min-width: 250px;
+    min-width: 0;
     box-shadow: 
         inset 0 3px 8px rgba(0, 0, 0, 0.6),
         0 2px 4px rgba(255, 140, 0, 0.2);
@@ -962,83 +967,427 @@ header h1 {
 
 
 
+/* Interface mobile optimisée pour usage vertical */
 @media (max-width: 768px) {
-    .main-content {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-    
-    .url-display {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    #deck-url {
-        min-width: auto;
-    }
-    
-    .cards-grid {
-        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-        gap: 12px;
-        padding: 12px;
-    }
-    
-    header h1 {
-        font-size: 2rem;
-    }
-
     .container {
-        padding: 10px;
+        padding: 3px;
         height: 100vh;
+        gap: 3px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
     }
 
     header {
-        padding: 15px 20px;
+        padding: 8px 12px;
+        margin-bottom: 0;
+        flex-shrink: 0;
+    }
+
+    header h1 {
+        font-size: 1.6rem;
         margin-bottom: 10px;
+        letter-spacing: 1px;
     }
 
-    .available-cards-section,
+    /* Layout mobile : tout en colonne avec hauteurs optimisées */
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Interface très compacte pour le deck */
+    .deck-info {
+        gap: 6px;
+        margin-bottom: 8px;
+    }
+
+    .deck-name-and-factions {
+        flex-direction: row;
+        gap: 8px;
+        align-items: flex-end;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .deck-name-section {
+        flex: 1;
+        min-width: 180px;
+        max-width: 220px;
+    }
+
+    .deck-name-section label {
+        font-size: 0.8rem;
+        margin-bottom: 4px;
+        display: block;
+    }
+
+    #deck-name {
+        width: 100%;
+        font-size: 0.9rem;
+        padding: 6px 10px;
+    }
+
+    /* Factions très compactes à côté */
+    .faction-selectors {
+        display: flex;
+        gap: 6px;
+        align-items: flex-end;
+    }
+
+    .faction-select {
+        min-width: 85px;
+    }
+
+    .faction-select label {
+        font-size: 0.65rem;
+        margin-bottom: 2px;
+        display: block;
+    }
+
+    #primary-faction, #secondary-faction {
+        width: 100%;
+        font-size: 0.65rem;
+        padding: 4px 6px;
+    }
+
+    /* URL display très compact */
+    .url-display {
+        flex-direction: column;
+        gap: 6px;
+        align-items: stretch;
+    }
+
+    .url-display label {
+        font-size: 0.8rem;
+        text-align: center;
+    }
+
+    /* Container pour l'URL et le bouton copy */
+    .url-input-container {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+    }
+
+    #deck-url {
+        flex: 1;
+        min-width: 0;
+        font-size: 10px;
+        padding: 6px 10px;
+        word-break: break-all;
+        max-height: 40px;
+        overflow: hidden;
+    }
+
+    #copy-url {
+        padding: 6px 10px;
+        font-size: 0.7rem;
+        flex-shrink: 0;
+        min-width: 60px;
+    }
+
+    /* Sections optimisées avec flex - tailles égales */
+    .available-cards-section {
+        padding: 10px;
+        border-radius: 8px;
+        overflow: hidden;
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
     .deck-section {
-        padding: 15px;
+        padding: 10px;
+        border-radius: 8px;
+        overflow: hidden;
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
     }
 
+    /* Titres très compacts */
+    .available-cards-section h2,
+    .deck-section h2 {
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+    }
+
+    .deck-header h2 {
+        font-size: 1.2rem;
+    }
+
+    /* Contrôles de filtres très compacts */
+    .filter-controls {
+        gap: 8px;
+        flex-direction: row;
+        margin-bottom: 8px;
+        flex-shrink: 0;
+        align-items: center;
+    }
+
+    #faction-filter {
+        font-size: 0.8rem;
+        padding: 6px 8px;
+        flex: 0 0 120px;
+        order: 1;
+    }
+
+    #search-filter {
+        font-size: 0.8rem;
+        padding: 6px 8px;
+        flex: 1;
+        order: 2;
+    }
+
+    /* Bouton clear repositionné */
+    .deck-header {
+        margin-bottom: 8px;
+        flex-shrink: 0;
+    }
+
+    #clear-deck {
+        width: 32px;
+        height: 32px;
+        font-size: 1.1rem;
+    }
+
+    /* Grille de cartes mobile - Défilement horizontal */
+    .cards-grid {
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+        padding: 10px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex: 1;
+        min-height: 0;
+        height: auto;
+        scroll-snap-type: x mandatory;
+    }
+
+    /* Cartes pour défilement horizontal - hauteur maximale et largeur proportionnée */
     .card {
-        max-width: 150px;
+        flex: 0 0 auto;
         padding: 6px;
+        border-radius: 8px;
+        scroll-snap-align: start;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        min-width: fit-content;
     }
 
+    .card img {
+        border-radius: 6px;
+        width: auto;
+        height: 100%;
+        max-height: calc(100% - 12px);
+        object-fit: contain;
+        display: block;
+    }
+
+    /* Badges mieux proportionnés */
     .quantity-badge {
-        width: 36px;
-        height: 36px;
+        width: 32px;
+        height: 32px;
         font-size: 16px;
+        top: -4px;
+        right: -4px;
+    }
+
+    /* Messages désactivés adaptés */
+    .disabled-message {
+        padding: 6px 10px;
+        font-size: 1rem;
+        max-width: 80px;
+    }
+
+    .disabled-emoji {
+        font-size: 1.4rem;
+    }
+
+    .disabled-text {
+        font-size: 0.5rem;
+    }
+
+    /* Section du deck optimisée */
+    .deck-section .cards-grid {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    /* Bouton de suppression adapté */
+    .deck-card .remove-btn {
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+        top: 4px;
+        left: 4px;
+    }
+
+    /* Améliorations du scroll horizontal */
+    .cards-grid::-webkit-scrollbar {
+        height: 6px;
+        width: 6px;
+    }
+
+    .cards-grid::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+    }
+
+    /* Empty deck message */
+    .empty-deck {
+        padding: 30px 15px;
+        font-size: 0.9rem;
+        width: 100%;
+        text-align: center;
+        flex: 1;
+    }
+}
+
+/* Media query pour très petits écrans */
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.4rem;
+        margin-bottom: 8px;
     }
 
     .deck-name-and-factions {
         flex-direction: column;
-        gap: 20px;
+        gap: 6px;
         align-items: center;
     }
 
-    .faction-selectors {
-        gap: 15px;
-        justify-content: center;
-    }
-
-    #primary-faction, #secondary-faction {
-        width: 110px;
-        font-size: 0.8rem;
-    }
-
-    .faction-select label {
-        font-size: 0.8rem;
+    .deck-name-section {
+        max-width: 240px;
+        min-width: auto;
+        flex: none;
     }
 
     #deck-name {
-        width: 250px;
-        font-size: 1rem;
+        max-width: 220px;
+        font-size: 0.85rem;
+        padding: 5px 8px;
     }
 
-    .deck-info {
+    .faction-selectors {
+        flex-direction: row;
+        gap: 8px;
+        align-items: flex-end;
+        justify-content: center;
+    }
+
+    .faction-select {
+        min-width: 70px;
+    }
+
+    .faction-select label {
+        font-size: 0.6rem;
+        margin-bottom: 2px;
+    }
+
+    #primary-faction, #secondary-faction {
+        font-size: 0.6rem;
+        padding: 3px 5px;
+    }
+
+    /* Défilement horizontal pour très petits écrans */
+    .cards-grid {
+        display: flex;
+        flex-direction: row;
         gap: 10px;
+        padding: 12px;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    /* Cartes pour très petits écrans - hauteur maximale et largeur proportionnée */
+    .card {
+        flex: 0 0 auto;
+        padding: 8px;
+        border-radius: 10px;
+        scroll-snap-align: start;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        min-width: fit-content;
+    }
+
+    .card img {
+        border-radius: 8px;
+        width: auto;
+        height: 100%;
+        max-height: calc(100% - 16px);
+        object-fit: contain;
+        display: block;
+    }
+
+    /* Badges plus gros pour la lisibilité */
+    .quantity-badge {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+        top: -6px;
+        right: -6px;
+    }
+
+    /* Messages adaptés */
+    .disabled-message {
+        max-width: 90px;
+        padding: 8px 12px;
+        font-size: 1.1rem;
+    }
+
+    .disabled-emoji {
+        font-size: 1.6rem;
+    }
+
+    .disabled-text {
+        font-size: 0.55rem;
+    }
+
+    /* Section du deck cohérente */
+    .deck-section .cards-grid {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    /* Bouton de suppression plus gros */
+    .deck-card .remove-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 14px;
+        top: 6px;
+        left: 6px;
+    }
+
+    /* Contrôles restent en ligne même sur très petits écrans */
+    .filter-controls {
+        flex-direction: row;
+        gap: 6px;
+    }
+
+    #faction-filter {
+        flex: 0 0 100px;
+        order: 1;
+    }
+
+    #search-filter {
+        order: 2;
     }
 }

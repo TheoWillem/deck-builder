@@ -270,8 +270,8 @@ class DeckVisualizer {
                 if (card) {
                     this.addCardToDeck(card.name); // Les messages d'erreur sont gérés dans addCardToDeck
                 }
-            });
-        });
+    });
+});
     }
 
     displayDeckCards() {
