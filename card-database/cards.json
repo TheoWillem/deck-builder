@@ -1,0 +1,4 @@
+[
+    { "name": "Mage", "cost": 3, "faction": "Magicien", "image": "mage.png" },
+    { "name": "Orgre", "cost": 5, "faction": "Monstre", "image": "orgre.png" }
+]
