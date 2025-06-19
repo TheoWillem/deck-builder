@@ -1168,31 +1168,31 @@ header h1 {
 /* Interface mobile optimisée pour usage vertical */
 @media (max-width: 768px) {
     .container {
-        padding: 3px;
+        padding: 2px;
         height: 100vh;
-        gap: 3px;
+        gap: 2px;
         display: flex;
         flex-direction: column;
         overflow: hidden;
     }
 
     header {
-        padding: 8px 12px;
-        margin-bottom: 5px;
+        padding: 5px 8px;
+        margin-bottom: 2px;
         flex-shrink: 0;
         background: transparent;
     }
 
     header h1 {
-        font-size: 1.6rem;
-        margin-bottom: 10px;
-        letter-spacing: 1px;
+        font-size: 1.4rem;
+        margin-bottom: 5px;
+        letter-spacing: 0.5px;
     }
 
     /* Layout mobile : tout en colonne avec hauteurs optimisées */
     .main-content {
         grid-template-columns: 1fr;
-        gap: 8px;
+        gap: 4px;
         flex: 1;
         min-height: 0;
         display: flex;
@@ -1201,9 +1201,9 @@ header h1 {
 
     /* Interface très compacte pour le deck */
     .deck-info {
-        gap: 6px;
-        margin-bottom: 8px;
-        padding: 10px;
+        gap: 4px;
+        margin-bottom: 4px;
+        padding: 6px;
         width: 100%;
     }
 
@@ -1212,18 +1212,18 @@ header h1 {
     /* Factions très compactes */
     .faction-selectors {
         display: flex;
-        gap: 6px;
+        gap: 4px;
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
     }
 
     #primary-faction, #secondary-faction {
-        width: 120px;
-        max-width: 120px;
-        min-width: 100px;
-        font-size: 0.75rem;
-        padding: 4px 6px;
+        width: 110px;
+        max-width: 110px;
+        min-width: 90px;
+        font-size: 0.7rem;
+        padding: 3px 5px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -1232,22 +1232,22 @@ header h1 {
     /* URL display très compact */
     .url-display {
         flex-direction: column;
-        gap: 6px;
+        gap: 3px;
         align-items: stretch;
     }
 
     /* Container pour les boutons */
     .url-input-container {
         display: flex;
-        gap: 6px;
+        gap: 3px;
         align-items: center;
         width: 100%;
     }
 
     #copy-url, #copy-decklist {
         flex: 1;
-        padding: 6px 8px;
-        font-size: 0.7rem;
+        padding: 4px 6px;
+        font-size: 0.65rem;
         text-align: center;
         min-width: 0;
         overflow: hidden;
@@ -1257,8 +1257,8 @@ header h1 {
 
     /* Sections optimisées avec flex - tailles égales */
     .available-cards-section {
-        padding: 10px;
-        border-radius: 8px;
+        padding: 6px;
+        border-radius: 6px;
         overflow: hidden;
         flex: 1;
         min-height: 0;
@@ -1267,8 +1267,8 @@ header h1 {
     }
 
     .deck-section {
-        padding: 10px;
-        border-radius: 8px;
+        padding: 6px;
+        border-radius: 6px;
         overflow: hidden;
         flex: 1;
         min-height: 0;
@@ -1279,24 +1279,25 @@ header h1 {
     /* Titres très compacts */
     .available-cards-section h2,
     .deck-section h2 {
-        font-size: 1.2rem;
-        margin-bottom: 8px;
+        font-size: 1rem;
+        margin-bottom: 4px;
     }
 
 
 
     .deck-count {
-        font-size: 0.75rem;
-        margin-top: 3px;
+        font-size: 0.7rem;
+        margin-top: 2px;
         margin-left: 1px;
     }
 
     .deck-header-text h2 {
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
 
     #deck-title {
-        font-size: 18px;
+        font-size: 16px;
+        padding: 3px 5px;
     }
 
     #deck-title::-webkit-scrollbar {
@@ -1305,66 +1306,60 @@ header h1 {
     
     /* Contrôles de filtres très compacts */
     .filter-controls {
-        gap: 8px;
+        gap: 4px;
         flex-direction: row;
-        margin-bottom: 8px;
+        margin-bottom: 4px;
         flex-shrink: 0;
         align-items: center;
+        padding: 3px 6px;
     }
 
     .faction-filter-button {
-        font-size: 0.8rem;
-        padding: 6px 8px;
-        flex: 0 0 120px;
+        font-size: 0.7rem;
+        padding: 4px 6px;
+        flex: 0 0 100px;
         order: 1;
-        min-width: 120px;
+        min-width: 100px;
     }
 
     #search-filter {
-        font-size: 0.8rem;
-        padding: 6px 8px;
+        font-size: 0.75rem;
+        padding: 4px 6px;
         flex: 1;
         order: 2;
     }
 
     /* Bouton clear repositionné */
     .deck-header {
-        margin-bottom: 8px;
+        margin-bottom: 4px;
         flex-shrink: 0;
+        padding: 3px 6px;
     }
 
     #clear-deck {
-        width: 32px;
-        height: 32px;
-        font-size: 1.1rem;
+        width: 28px;
+        height: 28px;
+        font-size: 1rem;
     }
 
-    /* Grille de cartes mobile - Défilement horizontal */
+    /* Grille de cartes mobile - Grid compact */
     .cards-grid {
-        display: flex;
-        flex-direction: row;
-        gap: 12px;
-        padding: 10px;
-        overflow-x: auto;
-        overflow-y: hidden;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+        gap: 3px;
+        padding: 4px 6px;
+        overflow-y: auto;
+        overflow-x: hidden;
         flex: 1;
         min-height: 0;
-        height: auto;
-        scroll-snap-type: x mandatory;
     }
 
-    /* Cartes pour défilement horizontal - hauteur maximale et largeur proportionnée */
+    /* Cartes pour grid mobile - plus compactes */
     .card {
-        flex: 0 0 auto;
-        padding: 6px;
-        border-radius: 8px;
-        scroll-snap-align: start;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: auto;
-        min-width: fit-content;
+        width: 100%;
+        height: 110px;
+        border-radius: 4px;
+        border: 1px solid rgba(218, 165, 32, 0.4);
     }
 
     .card img {
@@ -1440,15 +1435,13 @@ header h1 {
 /* Media query pour très petits écrans */
 @media (max-width: 480px) {
     header h1 {
-        font-size: 1.4rem;
-        margin-bottom: 8px;
+        font-size: 1.2rem;
+        margin-bottom: 4px;
     }
-
-
 
     .faction-selectors {
         flex-direction: row;
-        gap: 6px;
+        gap: 3px;
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
@@ -1456,32 +1449,33 @@ header h1 {
     
     .deck-info {
         width: 100%;
-        padding: 8px;
+        padding: 4px;
     }
 
     #primary-faction, #secondary-faction {
-        font-size: 0.7rem;
-        padding: 4px 6px;
-        width: 110px;
-        max-width: 110px;
-        min-width: 90px;
+        font-size: 0.65rem;
+        padding: 2px 4px;
+        width: 100px;
+        max-width: 100px;
+        min-width: 80px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
 
     .deck-count {
-        font-size: 0.65rem;
-        margin-top: 2px;
+        font-size: 0.6rem;
+        margin-top: 1px;
         margin-left: 1px;
     }
 
     .deck-header-text h2 {
-        font-size: 1.1rem;
+        font-size: 0.9rem;
     }
 
     #deck-title {
-        font-size: 16px;
+        font-size: 14px;
+        padding: 2px 4px;
     }
 
     #deck-title::-webkit-scrollbar {
