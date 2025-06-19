@@ -88,9 +88,6 @@ class DeckVisualizer {
             { file: 'C&T Cards 2 - Wild Horde.csv', faction: 'WH' }
         ];
 
-        // Créer d'abord un index de toutes les images disponibles
-        this.imageIndex = await this.buildImageIndex();
-
         const allCards = [];
         let cardId = 1;
 
@@ -106,23 +103,23 @@ class DeckVisualizer {
             }
         }
 
-        // Afficher un message de chargement des images
-        availableCardsGrid.innerHTML = '<div class="loading-message">🃏 Loading cards...</div>';
-        
         // Filtrer les tokens, cantrips, banes et boons avant de charger les images
         const playableCards = allCards.filter(card => this.isPlayableCard(card));
 
         console.log(`Filtered out ${allCards.length - playableCards.length} tokens, cantrips, banes and boons`);
 
-        // Charger toutes les images en une seule fois
-        await this.setImagePathsAsync(playableCards);
+        // Ne plus charger les images à l'avance, on les charge à la demande
+        playableCards.forEach(card => {
+            card.image = this.getImagePathSync(card.name, card.faction);
+        });
 
         return playableCards;
     }
 
-    async buildImageIndex() {
-        const imageIndex = {};
-        const seasons = ['Core', 'Season1', 'Season2', 'Tutorial'];
+    getImagePathSync(cardName, faction) {
+        // Génère le chemin d'image sans faire de requête HTTP
+        // On essaie toujours Core en premier car c'est le plus probable
+        const normalizedName = this.normalizeCardName(cardName);
         const factionFolders = {
             'AO': 'AugurOrder',
             'DM': 'DungeonMaster', 
@@ -131,25 +128,39 @@ class DeckVisualizer {
             'WH': 'WildHorde'
         };
 
-        for (const season of seasons) {
-            for (const [factionCode, folderName] of Object.entries(factionFolders)) {
-                try {
-                    // Pour chaque combinaison saison/faction, on essaie de récupérer la liste des fichiers
-                    // Comme on ne peut pas lister directement, on va tester les images quand on en aura besoin
-                    const basePath = `../card-database/Cards_images/${season}/${folderName}/`;
-                    if (!imageIndex[factionCode]) {
-                        imageIndex[factionCode] = {};
-                    }
-                    if (!imageIndex[factionCode][season]) {
-                        imageIndex[factionCode][season] = basePath;
-                    }
-                } catch (error) {
-                    console.log(`No images found for ${season}/${folderName}`);
-                }
-            }
-        }
+        const folderName = factionFolders[faction] || 'Neutral';
+        
+        // Mapping direct pour les corrections connues
+        const directMappings = {
+            'Zarothrix, Archanist Supreme': 'Zarothrix, Arcanist Supreme',
+            'Vicarous Arcane Eater': 'Vicarious Arcane Eater',
+            'Great Revilatalization': 'Great Revitalization',
+            'Ritual of Anniihilation': 'Ritual of Annihilation',
+            'Shifty Inquistor': 'Shifty Inquisitor',
+            'Killer bee of Urwuste': 'Killer Bee of Urwuste',
+            'Jorgen the Stout': 'Jorgen, the Stout',
+            'Call to Arm': 'Call to Arms',
+            'Dishonor Among Theives': 'Dishonor Among Thieves',
+            'Meager Mideed': 'Meager Misdeed',
+            'Altran\'s Armory': 'Altaran\'s Armory',
+            'Sultian Cutthroat': 'Sulitian Cutthroat',
+            'Sultian Swordman': 'Sulitian Swordsman',
+            'Passian Liquidator': 'Passanian Liquidator',
+            'Stolen Tresure': 'Stolen Treasure',
+            'Preplaned Prophecy': 'Preplanned Prophecy',
+            'Convert Contractor': 'Covert Contractor',
+            'Copyright Infringment': 'Copyright Infringement',
+            'Grant Tutoring': 'Grand Tutoring',
+            'Merchand\'s Guard': 'Merchant\'s Guard',
+            'Resourse Equalization': 'Resource Equalization',
+            'Mastecraft Flesh Golem': 'Mastercraft Flesh Golem',
+            'Echoes of Verentihil': 'Echoes of Verenthil'
+        };
 
-        return imageIndex;
+        const finalName = directMappings[normalizedName] || normalizedName;
+        
+        // Retourne toujours le chemin Core en premier (le plus probable)
+        return `../card-database/Cards_images/Core/${folderName}/${finalName}.png`;
     }
 
     normalizeCardName(name) {
@@ -173,139 +184,7 @@ class DeckVisualizer {
         return true;
     }
 
-    async getImagePath(cardName, faction) {
-        // Cache pour éviter les requêtes redondantes
-        if (!this.imageCache) {
-            this.imageCache = new Map();
-        }
 
-        const cacheKey = `${faction}-${cardName}`;
-        if (this.imageCache.has(cacheKey)) {
-            return this.imageCache.get(cacheKey);
-        }
-
-        const normalizedName = this.normalizeCardName(cardName);
-        const seasons = ['Core', 'Season1', 'Season2', 'Tutorial'];
-        const factionFolders = {
-            'AO': 'AugurOrder',
-            'DM': 'DungeonMaster', 
-            'N': 'Neutral',
-            'PG': 'PlunderingGuild',
-            'WH': 'WildHorde'
-        };
-
-        const folderName = factionFolders[faction] || 'Neutral';
-
-        // Optimise les variantes les plus communes d'abord
-        const nameVariants = this.getNameVariants(normalizedName);
-
-        // Recherche optimisée avec early return
-        const imagePath = await this.findImageWithCache(seasons, folderName, nameVariants);
-        
-        // Cache le résultat
-        this.imageCache.set(cacheKey, imagePath);
-        return imagePath;
-    }
-
-    getNameVariants(normalizedName) {
-        // Mapping direct pour les corrections connues (plus rapide)
-        const directMappings = {
-            'Zarothrix, Archanist Supreme': 'Zarothrix, Arcanist Supreme',
-            'Vicarous Arcane Eater': 'Vicarious Arcane Eater',
-            'Great Revilatalization': 'Great Revitalization',
-            'Ritual of Anniihilation': 'Ritual of Annihilation',
-            'Shifty Inquistor': 'Shifty Inquisitor',
-            'Killer bee of Urwuste': 'Killer Bee of Urwuste',
-            'Jorgen the Stout': 'Jorgen, the Stout',
-            'Call to Arm': 'Call to Arms',
-            'Dishonor Among Theives': 'Dishonor Among Thieves',
-            'Meager Mideed': 'Meager Misdeed',
-            'Altran\'s Armory': 'Altaran\'s Armory',
-            'Sultian Cutthroat': 'Sulitian Cutthroat',
-            'Sultian Swordman': 'Sulitian Swordsman',
-            'Passian Liquidator': 'Passanian Liquidator',
-            'Stolen Tresure': 'Stolen Treasure',
-            'Preplaned Prophecy': 'Preplanned Prophecy',
-            'Convert Contractor': 'Covert Contractor',
-            'Unfullfilled Obligation': 'Unfulfilled Obligation',
-            'Copyright Infringment': 'Copyright Infringement',
-            'Grant Tutoring': 'Grand Tutoring',
-            'Lunareals Light': 'Lunareals Light',
-            'Merchand\'s Guard': 'Merchant\'s Guard',
-            'Resourse Equalization': 'Resource Equalization',
-            'Mastecraft Flesh Golem': 'Mastercraft Flesh Golem',
-            'Echoes of Verentihil': 'Echoes of Verenthil'
-        };
-
-        // Vérifier d'abord le mapping direct
-        if (directMappings[normalizedName]) {
-            return [directMappings[normalizedName], normalizedName];
-        }
-
-        // Générer les variantes les plus communes
-        return [
-            normalizedName,
-            normalizedName.replace(' Or ', ' or '),
-            normalizedName.replace(' And ', ' and '),
-            normalizedName.replace(' The ', ' the '),
-            normalizedName.replace(' Of ', ' of '),
-            normalizedName.replace('Theives', 'Thieves'),
-            normalizedName.replace('Mideed', 'Misdeed'),
-            normalizedName.replace('Swordman', 'Swordsman'),
-            normalizedName.replace('bee ', 'Bee '),
-            normalizedName.replace('Killer bee', 'Killer Bee')
-        ].filter((variant, index, arr) => arr.indexOf(variant) === index); // Supprime les doublons
-    }
-
-    async findImageWithCache(seasons, folderName, nameVariants) {
-        // Cache des requêtes HEAD pour éviter les requêtes multiples
-        if (!this.headCache) {
-            this.headCache = new Map();
-        }
-
-        for (const season of seasons) {
-            for (const nameVariant of nameVariants) {
-                const imagePath = `../card-database/Cards_images/${season}/${folderName}/${nameVariant}.png`;
-                
-                // Vérifier le cache des HEAD requests
-                if (this.headCache.has(imagePath)) {
-                    if (this.headCache.get(imagePath)) {
-                        return imagePath;
-                    }
-                    continue; // Skip si on sait déjà que l'image n'existe pas
-                }
-
-                // Test si l'image existe avec timeout
-                try {
-                    const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 3000); // 3s timeout
-                    
-                    const response = await fetch(imagePath, { 
-                        method: 'HEAD',
-                        signal: controller.signal
-                    });
-                    
-                    clearTimeout(timeoutId);
-                    const exists = response.ok;
-                    this.headCache.set(imagePath, exists);
-                    
-                    if (exists) {
-                        return imagePath;
-                    }
-                } catch (error) {
-                    this.headCache.set(imagePath, false);
-                    if (error.name !== 'AbortError') {
-                        console.debug(`Failed to check image: ${imagePath}`);
-                    }
-                }
-            }
-        }
-
-        // Si aucune image n'est trouvée, retourne un chemin par défaut
-        const defaultPath = `../card-database/Cards_images/Core/${folderName}/${nameVariants[0]}.png`;
-        console.warn(`Image not found for card: ${nameVariants[0]} (faction: ${folderName})`);
-        return defaultPath;
-    }
 
     parseCSV(csvText, faction, startId) {
         const lines = csvText.split('\n');
@@ -355,28 +234,7 @@ class DeckVisualizer {
         return cards;
     }
 
-    async setImagePathsAsync(cards) {
-        // Traiter les cartes par batch pour éviter de surcharger le réseau
-        const batchSize = 10;
-        const batches = [];
-        
-        for (let i = 0; i < cards.length; i += batchSize) {
-            batches.push(cards.slice(i, i + batchSize));
-        }
-        
-        for (const batch of batches) {
-            // Traiter chaque batch en parallèle
-            const promises = batch.map(async (card) => {
-                card.image = await this.getImagePath(card.name, card.faction);
-            });
-            
-            await Promise.all(promises);
-        }
-        
-        // Refresh display seulement une fois à la fin quand toutes les images sont prêtes
-        this.displayAvailableCards();
-        this.displayDeckCards();
-    }
+
 
     parseCSVLine(line) {
         const result = [];
@@ -807,8 +665,6 @@ class DeckVisualizer {
     }
 
     generateCardHTML(card, quantity = 0) {
-        const imagePath = card.image ? `../card-database/${card.image}` : null;
-        
         // For collection cards, display the current quantity in the deck
         let displayQuantity = quantity;
         if (quantity === 0 && this.currentDeck[card.name]) {
@@ -820,11 +676,9 @@ class DeckVisualizer {
         const isCardAllowed = allowedFactions.includes(card.faction);
         const disabledClass = (quantity === 0 && !isCardAllowed) ? 'card-disabled' : '';
         
-        // N'afficher l'image que si le chemin est disponible, sinon afficher le placeholder
-        const imageHTML = imagePath ? 
-            `<img src="${imagePath}" alt="${card.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-             <div class="card-placeholder" style="display: none;">📜 ${card.name}</div>` :
-            `<div class="card-placeholder" style="display: flex;">📜 ${card.name}</div>`;
+        // Générer les chemins de fallback pour les images
+        const fallbackPaths = this.getImageFallbackPaths(card.name, card.faction);
+        const imageHTML = this.generateImageHTML(card.name, fallbackPaths);
         
         return `
             <div class="card ${quantity > 0 ? 'deck-card' : ''} ${disabledClass} faction-${card.faction.toLowerCase().replace(/\s+/g, '-')}" 
@@ -835,6 +689,74 @@ class DeckVisualizer {
                 ${imageHTML}
             </div>
         `;
+    }
+
+    getImageFallbackPaths(cardName, faction) {
+        const normalizedName = this.normalizeCardName(cardName);
+        const factionFolders = {
+            'AO': 'AugurOrder',
+            'DM': 'DungeonMaster', 
+            'N': 'Neutral',
+            'PG': 'PlunderingGuild',
+            'WH': 'WildHorde'
+        };
+
+        const folderName = factionFolders[faction] || 'Neutral';
+        
+        // Mapping direct pour les corrections connues
+        const directMappings = {
+            'Zarothrix, Archanist Supreme': 'Zarothrix, Arcanist Supreme',
+            'Vicarous Arcane Eater': 'Vicarious Arcane Eater',
+            'Great Revilatalization': 'Great Revitalization',
+            'Ritual of Anniihilation': 'Ritual of Annihilation',
+            'Shifty Inquistor': 'Shifty Inquisitor',
+            'Killer bee of Urwuste': 'Killer Bee of Urwuste',
+            'Jorgen the Stout': 'Jorgen, the Stout',
+            'Call to Arm': 'Call to Arms',
+            'Dishonor Among Theives': 'Dishonor Among Thieves',
+            'Meager Mideed': 'Meager Misdeed',
+            'Altran\'s Armory': 'Altaran\'s Armory',
+            'Sultian Cutthroat': 'Sulitian Cutthroat',
+            'Sultian Swordman': 'Sulitian Swordsman',
+            'Passian Liquidator': 'Passanian Liquidator',
+            'Stolen Tresure': 'Stolen Treasure',
+            'Preplaned Prophecy': 'Preplanned Prophecy',
+            'Convert Contractor': 'Covert Contractor',
+            'Copyright Infringment': 'Copyright Infringement',
+            'Grant Tutoring': 'Grand Tutoring',
+            'Merchand\'s Guard': 'Merchant\'s Guard',
+            'Resourse Equalization': 'Resource Equalization',
+            'Mastecraft Flesh Golem': 'Mastercraft Flesh Golem',
+            'Echoes of Verentihil': 'Echoes of Verenthil'
+        };
+
+        const finalName = directMappings[normalizedName] || normalizedName;
+        
+        // Ordre de priorité des chemins (Core en premier car le plus probable)
+        const seasons = ['Core', 'Season1', 'Season2', 'Tutorial'];
+        return seasons.map(season => 
+            `../card-database/Cards_images/${season}/${folderName}/${finalName}.png`
+        );
+    }
+
+    generateImageHTML(cardName, fallbackPaths) {
+        if (fallbackPaths.length === 0) {
+            return `<div class="card-placeholder">📜 ${cardName}</div>`;
+        }
+
+        let imageHTML = '';
+        fallbackPaths.forEach((path, index) => {
+            const isLast = index === fallbackPaths.length - 1;
+            const nextFallback = isLast ? 
+                'this.style.display=\'none\'; this.parentElement.querySelector(\'.card-placeholder\').style.display=\'flex\';' :
+                `this.style.display='none'; this.nextElementSibling.style.display='block';`;
+            
+            const display = index === 0 ? 'block' : 'none';
+            imageHTML += `<img src="${path}" alt="${cardName}" loading="lazy" style="display: ${display};" onerror="${nextFallback}">`;
+        });
+        
+        imageHTML += `<div class="card-placeholder" style="display: none;">📜 ${cardName}</div>`;
+        return imageHTML;
     }
 
     updateDeckURL() {
