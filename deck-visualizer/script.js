@@ -668,12 +668,38 @@ class DeckVisualizer {
 
         const folderName = factionFolders[faction] || 'Neutral';
         
-        // Utilise le nom original de la carte (pas normalisé) pour le chemin du fichier
-        // La normalisation n'est utilisée QUE pour la comparaison si nécessaire
+        // Créer plusieurs variantes du nom de la carte pour correspondre aux différences possibles
+        const cardNameVariants = this.getCardNameVariants(cardName);
+        
         const seasons = ['Core', 'Season1', 'Season2', 'Tutorial'];
-        return seasons.map(season => 
-            `../card-database/Cards_images/${season}/${folderName}/${cardName}.png`
-        );
+        const allPaths = [];
+        
+        // Pour chaque saison, essayer toutes les variantes
+        seasons.forEach(season => {
+            cardNameVariants.forEach(variant => {
+                allPaths.push(`../card-database/Cards_images/${season}/${folderName}/${variant}.png`);
+            });
+        });
+        
+        return allPaths;
+    }
+
+    getCardNameVariants(cardName) {
+        // Créer des variantes pour gérer les différences de casse communes
+        const variants = [
+            cardName, // Nom original
+            cardName.replace(' Or ', ' or '), // "Dead Or Alive" -> "Dead or Alive"
+            cardName.replace(' And ', ' and '), // "Rock And Roll" -> "Rock and Roll"
+            cardName.replace(' The ', ' the '), // "Into The Wild" -> "Into the Wild"
+            cardName.replace(' Of ', ' of '), // "Power Of Magic" -> "Power of Magic"
+            cardName.replace(' In ', ' in '), // "Lost In Time" -> "Lost in Time"
+            cardName.replace(' To ', ' to '), // "Back To Start" -> "Back to Start"
+            cardName.replace(' A ', ' a '), // "Once A Hero" -> "Once a Hero"
+            cardName.replace(' An ', ' an '), // "Such An Event" -> "Such an Event"
+        ];
+        
+        // Supprimer les doublons en gardant l'ordre
+        return variants.filter((variant, index, arr) => arr.indexOf(variant) === index);
     }
 
     generateImageHTML(cardName, fallbackPaths) {
