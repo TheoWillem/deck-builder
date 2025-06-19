@@ -119,7 +119,6 @@ class DeckVisualizer {
     getImagePathSync(cardName, faction) {
         // Génère le chemin d'image sans faire de requête HTTP
         // On essaie toujours Core en premier car c'est le plus probable
-        const normalizedName = this.normalizeCardName(cardName);
         const factionFolders = {
             'AO': 'AugurOrder',
             'DM': 'DungeonMaster', 
@@ -130,49 +129,16 @@ class DeckVisualizer {
 
         const folderName = factionFolders[faction] || 'Neutral';
         
-        // Mapping direct pour les corrections connues
-        const directMappings = {
-            'Zarothrix, Archanist Supreme': 'Zarothrix, Arcanist Supreme',
-            'Vicarous Arcane Eater': 'Vicarious Arcane Eater',
-            'Great Revilatalization': 'Great Revitalization',
-            'Ritual of Anniihilation': 'Ritual of Annihilation',
-            'Shifty Inquistor': 'Shifty Inquisitor',
-            'Killer bee of Urwuste': 'Killer Bee of Urwuste',
-            'Jorgen the Stout': 'Jorgen, the Stout',
-            'Call to Arm': 'Call to Arms',
-            'Dishonor Among Theives': 'Dishonor Among Thieves',
-            'Meager Mideed': 'Meager Misdeed',
-            'Altran\'s Armory': 'Altaran\'s Armory',
-            'Sultian Cutthroat': 'Sulitian Cutthroat',
-            'Sultian Swordman': 'Sulitian Swordsman',
-            'Passian Liquidator': 'Passanian Liquidator',
-            'Stolen Tresure': 'Stolen Treasure',
-            'Preplaned Prophecy': 'Preplanned Prophecy',
-            'Convert Contractor': 'Covert Contractor',
-            'Copyright Infringment': 'Copyright Infringement',
-            'Grant Tutoring': 'Grand Tutoring',
-            'Merchand\'s Guard': 'Merchant\'s Guard',
-            'Resourse Equalization': 'Resource Equalization',
-            'Mastecraft Flesh Golem': 'Mastercraft Flesh Golem',
-            'Echoes of Verentihil': 'Echoes of Verenthil'
-        };
-
-        const finalName = directMappings[normalizedName] || normalizedName;
-        
         // Retourne toujours le chemin Core en premier (le plus probable)
-        return `../card-database/Cards_images/Core/${folderName}/${finalName}.png`;
+        // Utilise le nom original de la carte pour le chemin du fichier
+        return `../card-database/Cards_images/Core/${folderName}/${cardName}.png`;
     }
 
     normalizeCardName(name) {
-        // Normalise le nom pour la correspondance avec les fichiers
+        // Normalisation agressive : supprime espaces et caractères spéciaux, met en minuscules
         return name
-            .trim()
-            .replace(/\s+/g, ' ') // Normalise les espaces multiples
-            .replace(/,\s*/g, ', ') // Normalise les virgules
-            .replace(/'/g, "'") // Remplace les apostrophes courbes
-            .replace(/"/g, '"') // Remplace les guillemets courbes
-            .replace(/–/g, '-') // Remplace les tirets longs
-            .replace(/—/g, '-'); // Remplace les tirets cadratin
+            .toLowerCase()
+            .replace(/[^a-z0-9]/g, ''); // Garde seulement les lettres et chiffres
     }
 
     isPlayableCard(card) {
@@ -692,7 +658,6 @@ class DeckVisualizer {
     }
 
     getImageFallbackPaths(cardName, faction) {
-        const normalizedName = this.normalizeCardName(cardName);
         const factionFolders = {
             'AO': 'AugurOrder',
             'DM': 'DungeonMaster', 
@@ -703,39 +668,11 @@ class DeckVisualizer {
 
         const folderName = factionFolders[faction] || 'Neutral';
         
-        // Mapping direct pour les corrections connues
-        const directMappings = {
-            'Zarothrix, Archanist Supreme': 'Zarothrix, Arcanist Supreme',
-            'Vicarous Arcane Eater': 'Vicarious Arcane Eater',
-            'Great Revilatalization': 'Great Revitalization',
-            'Ritual of Anniihilation': 'Ritual of Annihilation',
-            'Shifty Inquistor': 'Shifty Inquisitor',
-            'Killer bee of Urwuste': 'Killer Bee of Urwuste',
-            'Jorgen the Stout': 'Jorgen, the Stout',
-            'Call to Arm': 'Call to Arms',
-            'Dishonor Among Theives': 'Dishonor Among Thieves',
-            'Meager Mideed': 'Meager Misdeed',
-            'Altran\'s Armory': 'Altaran\'s Armory',
-            'Sultian Cutthroat': 'Sulitian Cutthroat',
-            'Sultian Swordman': 'Sulitian Swordsman',
-            'Passian Liquidator': 'Passanian Liquidator',
-            'Stolen Tresure': 'Stolen Treasure',
-            'Preplaned Prophecy': 'Preplanned Prophecy',
-            'Convert Contractor': 'Covert Contractor',
-            'Copyright Infringment': 'Copyright Infringement',
-            'Grant Tutoring': 'Grand Tutoring',
-            'Merchand\'s Guard': 'Merchant\'s Guard',
-            'Resourse Equalization': 'Resource Equalization',
-            'Mastecraft Flesh Golem': 'Mastercraft Flesh Golem',
-            'Echoes of Verentihil': 'Echoes of Verenthil'
-        };
-
-        const finalName = directMappings[normalizedName] || normalizedName;
-        
-        // Ordre de priorité des chemins (Core en premier car le plus probable)
+        // Utilise le nom original de la carte (pas normalisé) pour le chemin du fichier
+        // La normalisation n'est utilisée QUE pour la comparaison si nécessaire
         const seasons = ['Core', 'Season1', 'Season2', 'Tutorial'];
         return seasons.map(season => 
-            `../card-database/Cards_images/${season}/${folderName}/${finalName}.png`
+            `../card-database/Cards_images/${season}/${folderName}/${cardName}.png`
         );
     }
 
