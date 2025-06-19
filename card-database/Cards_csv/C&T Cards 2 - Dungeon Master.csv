@@ -1,0 +1,95 @@
+3.0.1 Current,Name,Mana cost,Card Type,Rarity,Statline,Attributes / Statuses,Ability
+,"Aaisha, Embalmed Savant",0,Master,Legendary,1/30,/,Acitivate: Banish 2 random spell from your Graveyard then summon a Cursed Cadaver with health equal to half their total mana cost +1.
+,Gunhaunt,0,Master,Legendary,1/30,"Ranged, Quickstrike",Acitivate: Banish a random creature from your Graveyard then summon a Desperado with attack equal to half its mana cost.
+,Necromancy,0,Spell,Rare,/,/,Give a creature in your Graveyard Doomed then summon it for half its mana cost. It is now Undead and has half its original health.
+,"Raahil, Amoral Anthropologist",0,Master,Legendary,1/30,/,"After a friendly Innate creature is sacrficed, add a Crystalized Aether to your hand. "
+,"Sir Larentier, Enchanted Lich",0,Master,Legendary,/,/,Activate: Sacrifice a friendly creature then add a Soul Essence to your hand.
+,"Zarothrix, Archanist Supreme",0,Master,Legendary,1/30,/,"Mastery 1 
+For every 10 Life below your starting health, this has an additionnal Mastery 1."
+,Book of the Ancient Arts,1,Spell,Common,/,/,Give a Friendly Creature Mastery 1 and +1/+1.
+,Corpse Retrieval,2,Spell,Uncommon,/,/,"Fetch 1 (Undead)
+Otherwise, give an Innate non-Doomed enemy creature ""Last Word: Shift this to your opponents Graveyard."""
+,Dark Matter Blast,1,Spell,Common,/,/,"Deal 3 damage.
+You take 1 direct damage."
+,Dutiful Servant,1,Elemental Creature ,Common,0/1,/,"Mastery 1
+If you cast a spell this turn, this has +0/+1 until your next turn."
+,Forsaken Existence,1,Spell,Common,/,/,Sacrifice a friendly creature then select an active enemy Ritual or Enchantment and Shift it to their Graveyard.
+,Gunhaunt's Call,1,Spell,Common,/,/,Banish a friendly creature then deal that creature's attack to an enemy creature.
+,Mind Squander,2,Spell,Rare,/,/,Banish your hand then draw X cards where X is the number of cards Banished +1.
+,Vile Bonesmith,1,Undead Creature,Uncommon,1/1,/,Enrage: (Undead): Gain +1/+1.
+,Volcanic Cinderling,1,Elemental Creature ,Common,0/2,/,Last Word / Sacrificed: Deal 1 direct damage.
+,Arcane Experiment,2,Undead Creature,Uncommon,1/1,/,"After casting your 3rd spell this turn, return this card to your hand from the Graveyard.
+Last Word: Draw a Card."
+,Bone Brute,2,Undead Creature,Common,2/2,/,"If you cast a spell this turn, this unexhaust and has +1/+0 until end of turn."
+,Boons to Bones,2,Spell,Common,/,/,Lose 1 Life then summon a Bone Amalgamate and draw a card.
+,Desecration,2,Spell,Common,/,/,"Banish the top 3 cards from your opponent's Graveyard and gain 1 Life for each card banished.
+Devotion: Top 5 cards instead."
+,Dread Experiments,2,Spell,Common,/,/,Sacrifice a friendly creature then draw 2 cards.
+,Dreadful Drain,2,Spell,Common,/,/,Your opponent loses 2 Life and you gain 2 Life.
+,Echoes of Verenthil,2,Spell,Uncommon,/,/,"Deal 1 damage, draw a card,  and shuffle 2 base Cantrip copies of this card into your Deck without this effect."
+,Frenzied Flesh Sewer,2,Undead Creature,Uncommon,0/3,/,Activate: Sacrifice another friendly creature then give its attack to another friendly creature.
+,Poisoned Gift,2,Spell,Common,/,/,Select any summoned creature. It becomes Poisoned.
+,Raahil's Reaping,2,Spell,Common,/,/,"Deal 2 damage to a creature. If it dies, add a Crystalized Aether to your hand."
+,Spring Trap,2,Spell,Common,/,/,"Select any summoned creature. If it is Innate. Shift it to its owner's hand. Otherwise, it dies."
+,Stormborne Zapling,2,Elemental Creature ,Common,2/2,/,Activate: Sacrifice another friendly creature and deal that creature's attack to an enemy creature.
+,Tombstone Mimic,5,Creature,Uncommon,3/4,/,Entrance: Banish a creature from your Graveyard then gain its Attributes and Abililies.
+,Aaisha's Revenge,3,Spell,Common,/,/,"Sacrifice a friendly creature then kill an enemy creature with the same health or less.
+Devotion: Draw a card."
+,Apprentice Necromancer,3,Creature,Common,2/2,/,Entrance: Summon a Bones Amalgamate.
+,Dreaded Corpse-Flinger,3,Undead Creature,Common,2/3,Ranged,Enrage: (Undead): Deal 1 Direct damage.
+,Groundbreaker Golem,3,Elemental Creature ,Uncommon,3/2,/,Wounded: Deal X direct damage where X is the health lost.
+,Larentier's Armaments,3,Spell,Common,/,/,"Give a friendly creature Ranged and ""Attacking: deal 2 direct damage to your opponent."""
+,Soulfire Brand,3,Spell,Common,/,/,"Mark 2 creatures. If they were an Elemental, they gain +2/-1. Otherwise, they gain +1/-2."
+,Till Undeath Do Us Part,3,Spell,Common,/,/,Give up to 2 friendly creatures +1/+1. If that creature is Undead +2/+2 instead.
+,Vicarous Arcane Eater,3,Creature,Common,2/2,/,"After you cast a spell, gain +1/+1."
+,Corrupted Current,4,Elemental Creature ,Common,4/4,Doomed,Sacrificed: Shuffle all Elementals in your Graveyard back into your Deck.
+,Eternal Aetherite,4,Elemental Creature ,Rare,5/5,/,Banished: Shuffle it into your Deck and reduce its mana cost by 1.
+,Loyal Spellshaper,4,Creature,Common,2/2,/,"Fetch 1 (Undead)
+Otherwise, give an Innate non-Doomed enemy creature ""Last Word: Shift this to your opponents Graveyard."""
+,Mind Corruption,4,Spell,Common,/,/,Unexhaust an enemy creature and gain control of it until the end of your turn.
+,Molten Martyr,4,Elemental Creature ,Uncommon,4/4,Backslash,"Activate: Sacrifice this creature
+Sacrificed: Deal 4 direct damage to all players."
+,Soul Extraction,4,Spell,Uncommon,/,/,Deal 2 damage to an enemy creature and all other creatures with the same name.
+,The Reconstructor,4,Undead Creature,Uncommon,2/2,/,"Entrance: Sacrifice a friendly another creature then summon a Bone Amalgamate. If it was an Undead, summon another."
+,Trap Engineer,4,Creature,Common,2/7,Multiblocker,"When this blocks, deal 1 damage to both Combatants before combat."
+,Crypt Guardian,5,Creature,Uncommon,3/5,Multiblocker,"Entrance: Duplicate the top non-Legendary card of your Graveyard.
+Deathblow: Shift the top card of your graveyard to your hand."
+,Elemental Reign,5,Enchantment Spell,Rare,/,/,"If a summoned creature targeted by a spell is an Elemental, your opponent loses 1 Life. Otherwise, all players lose 1 Life."
+,Great Revilatalization,5,Spell,Uncommon,/,/,"Sacrifice a friendly creature then gain Life equal to its health.
+Draw 2 cards."
+,Howling Tempest,5,Elemental Creature ,Uncommon,5/5,Taunt,"Cant be Unexhausted by card abilities. 
+Activate: Unexhaust another friendly creature."
+,Ritual of Anniihilation,5,Ritual Spell,Legendary,/,Doomed,"In 5 turns, your opponent loses 10 Life.
+When a friendly creature is sacrificed, reduce by 1 turn."
+,Worshiper of Verenthil,5,Creature,Common,4/4,/,"Last Word: If your deck contains no Neutral cards, kill the enemy creature with the highest attack."
+,"Alkar, the Former Master",10,Undead Creature,Legendary,1/10,/,"Mastery 2
+Your spells in hand cost X less Mana where X is your current Mastery. When you cast a spell, lose 1 Life."
+,Cosmic Reanimation,6,Spell,Uncommon,/,/,"All players resummon the top 3 creatures from their Graveyards.
+They are Undead and have Doomed."
+,Dread Weaver,6,Undead Creature,Common,6/6,/,Non-Elemental creatures cannot use their Activate abilities.
+,Mana Break,6,Spell,Uncommon,/,/,"All creatures take damage equal to half their mana cost.
+Devotion: Equal to their mana cost instead."
+,Searing Scorcher,6,Elemental Creature ,Uncommon,6/4,Unyeilding,"While Marked, has +0/+3."
+,Zealous Archivist,6,Undead Creature,Uncommon,3/5,Doomed,"Mastery 1
+Aftermath: Banish a random spell from your Graveyard and add a Cantrip copy to your hand."
+,Dark Matter Devastator,7,Elemental Creature ,Uncommon,7/7,/,"Activate: Deal 3 damage to another creature. If it wasn't Marked, this also takes 3 damage."
+,Marrow Harvester,7,Undead Creature,Rare,4/8,Multiblocker,"Deathblow: Draw a card.
+Devotion: Entrance / Deathblow instead."
+,Animated Weaponry,8,Creature,Uncommon,6/8,/,"Adjacent creatures have +3/+0.
+Entrance: Give adjacent creature Taunt."
+,Mastecraft Flesh Golem,9,Undead Creature,Uncommon,2/12,Multiblocker,"Prepare: Summon a Bone Amalgamate, if you can't; deal X direct damage where X is this creature's attack."
+,The Final Spell,10,Spell,Rare,/,/,"Shift all summoned creatures to their owner's Graveyard.
+Exhaust your Master."
+,Wraith's Wrath,20,Spell,Rare,/,/,"Mana cost is reduced by 1 for each card in your Graveyard.
+Deal 5 damage."
+,,,,,,,
+,Cursed Cadaver,0,Undead Token,/,0/*,Pacifist,Activate: Sacrifice this creature then give your Master +1/+0 until your next turn.
+,Desperado,0,Undead Token,/,*/0,"Quickstrike, Ranged",/
+,Soul Essence,2,Cantrip,/,/,/,Give all friendly creatures +1/+1 until your next turn.
+,Bone Amalgamate,0,Undead Token,/,1/1,/,"Last Word: Give a random friendly Undead +1/+1. If this was sacrificed, +2/+2 instead."
+,Echoes of Verentihil,2,Cantrip,/,/,/,"Deal 1 Damage.
+Draw a card."
+,Crystalized Aether ,1,Cantrip,/,/,/,"Choose one:
+-Fetch 1 (Elemental)
+-Mark a creature
+-Gain 2 Life"

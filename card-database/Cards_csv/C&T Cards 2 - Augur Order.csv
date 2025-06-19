@@ -1,0 +1,122 @@
+3.0.1 Current,Name,Mana cost,Card Type,Rarity,Statline,Attributes / Statuses,Ability
+,Beneficial Agreement,1,Spell,Common,/,/,"Select any summoned creature. When it's blocked, gain 2 Life.
+Discarded: Gain 2 Life."
+,Indentured Servitude,1,Spell,Common,/,/,"Summon a Sell-Sword. If you control any Contracts, summon that many instead."
+,Medicine Carrier,1,Underling Creature,Common,0/2,/,"Activate: 2 Life.
+Discarded: Gain 2 Life."
+,Preplaned Prophecy,1,Spell,Common,/,/,Draw 2 Innate cards then discard 2 cards to the top of your Deck.
+,Sleuthy Surveiller,1,Underling Creature,Common,1/3,Pacifist,"Prepare: Mark a creature
+Discarded: Mark a random enemy creature."
+,Systematic Subjugation,1,Spell,Common,/,/,"Deal 3 damage split randomly between 2 random enemy creatures.
+Devotion: 6 damage instead."
+,Breach of Terms,2,Contract Spell,Rare,/,/,"Condition: An opponent attempts to cast a spell from their hand.
+Nullify that spell, End this Contract."
+,Convert Contractor,2,Underling Creature,Uncommon,1/2,Amped,"This card deals combat damage equal to its health.
+Devotion: Has ""Enrage (Innate): Gain +0/+2."""
+,Dark Omen Spy-Hawk,2,Underling Creature,Uncommon,0/5,"Pacifist, Flight",Discarded: Remove Pacifist.
+,Defensive Acumen,2,Contract Spell,Uncommon,/,/,"Condition: 3+ friendly creatures have more health than attack.
+Friendly creatures deal combat damage equal to their health."
+,Escape Clause,2,Spell,Common,/,/,"Give friendly Loophole creature +0/+1.
+Discarded: Give a random friendly non-Loophole creature Loophole."
+,Life Pact,2,Contract Spell,Common,/,/,"Condition: You control 3 or more creatures.
+When you Life, give a friendly creature +1/+0, Underlings gain +2/+0 instead."
+,Pact of Non Aggression,2,Contract Spell,Legendary,/,/,"Condition: You have 5 or less Life.
+Gain 10 Life. End this contract."
+,Parchment Barrage,2,Contract Spell,Common,/,/,"Condition: Your opponent drew 2+ cards in single turn.
+Draw two cards and end this contract."
+,Power of Garsang,2,Contract Spell,Common,/,/,"Condition: You don't outnumber your opponent.
+Aftermath: Give friendly creatures +0/+1."
+,Reiteration,2,Contract Spell,Common,/,Doomed,"Condition: Cast an Innate non-Legendary non-Contract spell from your hand.
+Add a Cantrip copy of that spell to your hand. End this Contract."
+,Retaliation,2,Contract Spell,Legendary,/,/,"Condition: Your opponent cast a non-Legendary non-Contract spell.
+Banish all copies of that spell from all opponent zones. End this Contract."
+,Spell Limit Legislator,2,Underling Creature,Common,1/4,Pacifist,"Prepare: If your opponent played a spell last turn, draw a card.
+Discarded: A random spell in your hand costs 1 less mana."
+,Unfullfilled Obligation,2,Contract Spell,Common,/,/,"Condition: A friendly creature that never attacked dies and goes to the Graveyard.
+Resummon that creature and give it Doomed."
+,Unlawful Trespass,2,Contract Spell,Rare,/,/,"Condition: An enemy creature dealt direct combat damage.
+The attacker that dealt the most direct damage dies. End this Contract."
+,"Basumith, Reformed Devil",3,Creature,Legendary,2/4,/,"Your opponent's first spell each turn costs 1 less Mana.
+When an opponent casts a spell, draw a card."
+,Channeled Destruction,3,Ritual Spell,Rare,/,/,"In 10 turns, halve your opponenr's Life then destroy this Ritual.
+Reduce by 1 turn each time you gain Life."
+,Cooking the Books,3,Spell,Common,/,/,"Fetch 1 (non-Legendary spell), it cost 1 less Mana.
+Discarded: A random spell in your hand costs 1 less Mana."
+,Duplicity Specialist,3,Underling Creature,Common,1/5,Restless,Devotion: Has +2/+0 during your opponent's turn.
+,Golden Silence,3,Spell,Common,/,/,"Suppress a creature.
+If it was friendly, draw a card.
+Otherwise, gain 3 Life.
+Discarded: Shuffle your Deck."
+,Illusion Weaver,3,Underling Creature,Common,1/5,Pacifist,"Deathblow: Summon a Decoy.
+Discarded: Gain +0/+1."
+,Messenger Raven,3,Underling Creature,Common,1/4,"Flight , Loophole","After this deals direct damage, all players draw a cards."
+,Mystic Envisioner,4,Underling Creature,Common,0/4,/,"When a creature uses an Activate ability, gain +1/+0.
+Discarded: Gain +1/+0."
+,Resourse Equalization,3,Spell,Uncommon,/,/,"Your opponent discard a cards a random card then all players draw a card.
+Discarded: Gain 2 Life."
+,Restorative Alchemy,3,Spell,Uncommon,/,/,"Gain 3 Life and randomly add 3 Life Elexirs to your Deck.
+Discarded: Randomly add 1 Life Elexir to your Deck."
+,Shielded Enhancement ,3,Spell,Common,/,/,"Give a friendly creature +0/+3. If it was below full health, it also gains Armored.
+Discarded: Give a random friendly creature +0/+1."
+,Altering Fate,4,Spell,Rare,/,/,"Look at the top 4 cards of your Deck then put them back in any order.
+Draw 2 cards."
+,Decoy Disarray ,4,Spell,Common,/,/,"Summon a Decoy on the left and right side of your Creature Zone.
+Discarded: Shift a random enemy Ritual or Enchantment to their hand."
+,Field Bureaucrat,4,Underling Creature,Common,3/3,/,Your first spell each turn costs 1 less Mana.
+,Reparations,4,Spell,Uncommon,/,/,"Kill an enemy creature with 6 or less attack.
+Discarded: Give a random enemy creature -2/-0."
+,Royal Filibuster,4,Ritual Spell,Uncommon,/,/,"Until your next turn, when a player gains or loses Life, reduce the amount to 1."
+,Sneaky Saboteur,4,Creature,Uncommon,2/6,Pacifist,"Entrances do not trigger.
+Prepare: Lose 1 health
+Discarded: Gain +0/+1."
+,Wounded Guardian,4,Creature,Uncommon,1/6,Loophole,"After losing Life, give another random friendly creature +0/+1.
+Discarded: Give a random friendly creature +0/+1."
+,Blood Moon's Blade,5,Creature,Uncommon,2/8,"Restless, Taunt","When blocked or targeted as a result of Taunt, deal 1 damage to all Marked enemy creatures.
+Discarded: Mark a random enemy creature."
+,Lowly Lieutenant,5,Underling Creature,Uncommon,2/5,Ranged,"After you Discard a card, summon a Sell-Sword."
+,Lunareals Light,5,Enchantment Spell,Rare,/,/,"When a friendly creature with 2 or less attack is summoned, it gains +1/+0. If it has has Pacifist, +0/+2 instead."
+,Merchand's Guard,5,Underling Creature,Common,3/5,/,"When you gain Life, this gains +0/+1.
+Discarded: Gain -1/+1 and Loophole."
+,Slick Grifter,5,Creature,Common,5/5,/,"After you gain Life, Deal 1 direct damage to your opponent.
+Discarded: Gain 2 Life."
+,Spellbreaker,5,Creature,Uncommon,3/6,/,"Entrance: Your opponent's spells cost 5 more Mana until your next turn.
+Discarded:Banish the top spell from the enemy Graveyard."
+,Veil of Shadows,5,Spell,Common,/,/,"Mark 2 creatures.
+Suppress all Marked enemy creatures.
+Remove Pacifist from all summoned creatures."
+,Worshiper of Taluum,5,Creature,Common,4/4,Taunt,"Last Word: If your deck contains no Neutral cards, give all friendly creatures +0/+2."
+,Arbiter of Garsang,6,Creature,Uncommon,3/8,Multiblocker,"Enrage: (Underling): Deal 1 direct damage.
+Discarded: A random friendly non-Underling becomes an Underling."
+,Archival Collapse,6,Spell,Common,/,/,"Kill the left and rightmost Innate enemy creatures.
+Discarded: Banish the top creature in your opponent's Graveyard."
+,Consequence of Chaos,6,Spell,Uncommon,/,/,"All non-Pacifist creatures lose 2 health.
+Discarded: Increase health lost by 2."
+,Endless Enforcers,6,Underling Creature,Rare,2/8,/,Wounded: Summon a base Token copy of Endless Enforcer with this creatures current stats.
+,Forceful Acquisition,6,Spell,Common,/,/,"Gain control of an enemy creature and reduce its attack to 0, then make it an Underling.
+Discarded: Give a random enemy creature -1/-0."
+,Nullmage Resident,6,Creature,Common,4/4,/,"All creatures in all player's hands cost 2 more Mana.
+Discarded: A random 9 Mana or less creature in all player's hands costs 1 more Mana."
+,Perpetual Watchman,6,Creature,Common,1/8,"Multiblocker, Restless","Blocking: Give friendly Loophole creatures +0/+1.
+Discarded: Give a random friendly Loophole creature +0/+1."
+,Copyright Infringment,4,Spell,Uncommon,/,/,"Summon a copy of a friendly non-Legendary creature that costs the same or less than this spell.
+Discarded: Shuffle all Decks."
+,Grant Tutoring,9,Spell,Uncommon,/,/,Fetch 1 (Non-Legendary Creature) then Banish it and replace the Abilities of all friendly Underlings with its Abilities.
+,Lawless Firebrand,7,Elemental Creature,Uncommon,3/10,Multiblocker,"Deathblow: Deal 2 direct damage.
+Discarded: Deal 1 direct damage."
+,Violent Repossession,6,Spell,Uncommon,/,/,"Banish an enemy creature. If it cost less mana than this, draw a card.
+Discarded: Banish the top creature from the enemy Graveyard."
+,"Nakoma, Order Informant",7,Creature,Legendary,2/10,Pacifist,"After your opponent plays a card from their hand, increase the mana cost of all other cards in their hand by 1 until end of turn."
+,Improvised Laws,8,Spell,Common,/,/,"Give all creatures -2/-2 until next turn.
+Repeat for each of your contracts in play.
+Discarded: Reduce mana cost by 1."
+,Suppressor of Magic,9,Elemental Creature,Rare,7/7,/,"Activate: Suppress a creature.
+Discarded: A random 9 mana or less spell in your opponent's hand costs 1 more Mana."
+,Tomerralian Turncoat,8,Creature,Uncommon,5/9,/,"Activate: Give all other summoned creatures -2/-0.
+Devotion:-0/-2 instead."
+,"Kira, Heroine of Garsang",8,Creature,Legendary,2/10,Loophole,"After you lose Life, give all other friendly creatures +0/+1..
+Discarded: Give a random friendly creature +0/+2."
+,,,,,,,
+,Sell-Sword,0,Underling Token,/,1/1,/,Last Word: All players gain 1 Life.
+,Life Elixir,0,Boon,/,/,/,"When drawn, gain 2 Life.
+Draw another card."
+,Decoy,0,Underling Token,/,0/1,Taunt,"When targeted by a spell or ability as a result of Taunt, gain a Mana fragment."

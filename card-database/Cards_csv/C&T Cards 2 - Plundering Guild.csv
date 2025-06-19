@@ -1,0 +1,133 @@
+3.0.1 Current,Name,Mana cost,Card Type,Rarity,Statline,Attributes / Statuses,Ability
+,Adventurous Farmhand  ,1,Mercenary Creature,Common,1/2,/,Enhance: Gain +2/+0 for 1 Coin.
+,Dead Or Alive,1,Spell,Common,/,/,"Deal 2 damage to a creature. If it dies, gain 1 Coin.
+Enchance: Deal 3 damage instead for 1 Coin."
+,"Eryk, Sole Survivor",1,Creature,Legendary,0/4,/,"All Last Word abilities trigger twice.
+Aftermath: Return this to its owner's hand and increase its mana cost by 1"
+,Frontline Squire,1,Creature,Common,1/1,/,"Entrance: Give a random creature in your hand +1/+1.
+Enhance: 2 random creatures instead for 1 Coin."
+,Infernix,1,Elemental Creature,Common,1/1,/,"Entrance: Deal 1 damage to an enemy creature. 
+Devotion: 2 damage instead."
+,Loot the Body,1,Spell,Uncommon,/,/,"Mark an enemy creature and give it ""Last Word: Your Opponent draws a card.""
+Enhance: 2 enemy creatures instead for 1 coin."
+,Merc Mule,1,Mercenary Creature,Common,1/1,Taunt,"Last Word: Give a random friendly creature +2/+0.
+Enhance: Remove random for 1 Coin"
+,Mercenary Mayhem ,1,Spell,Common,/,/,"Deal 1 damage to an enemy creature. Repeat once if you control a Mercenary.
+Enhance: 2 damage instead for 2 Coins"
+,Wanted Notice,1,Spell,Uncommon,/,/,"Randomly add 3 Assassin's Strikes to your opponent's Deck.
+Enhance: Randomly add 6 instead for 2 Coins."
+,Ambitious Eulogist   ,2,Creature,Common,2/2,/,"Entrance: Suppress an enemy creature that has a Last Word ability. 
+Devotion: 2 enemy creatures instead."
+,Dagger Supplier,2,Mercenary Creature,Uncommon,2/2,/,"After summoning an Innate Mercenary, randomly add a Call to Arms to your Deck.
+Enhance: Gain +0/+2 for 2 Coins"
+,Daring Swindler,2,Creature,Common,2/2,/,"Last Word: Add a copy of a random card from your opponent's hand to your hand.
+Enhance: Deathblow / Last Word instead for 1 Coin."
+,Dishonor Among Theives,2,Spell,Common,/,/,"Mark 2 creatures.
+Gain a coin for each Marked friendly creature.
+Enhance: Mark 3 creatures instead for 1 Coin."
+,Exit Strategist,2,Mercenary Creature,Uncommon,2/2,/,"Entrance: Trigger a random friendly Last Word ability.
+Enhance: Remove random for 2 Coins."
+,Golden Gambit,2,Ritual Spell,Uncommon,/,/,"Lose all Coins. In 5 turns, gain 5 Coins or triple the Coins lost (0), whichever is greater.
+After you Enhance a card, reduce by 1 turn."
+,Meager Mideed,2,Spell,Rare,/,/,"Shift the top 2 Innate cards from the opponent's Deck to their Graveyard.
+Enhance: 4 cards instead for 1 Coin."
+,Pickpocket,2,Spell,Common,/,/,"Steal a random Innate card from your opponent's Deck then shuffle it into yours.
+Enhance: Steal 2 instead for 1 Coin."
+,Pickpocket of Tomeral,2,Mercenary Creature,Common,1/1,/,"Entrance: Gain 2 Coins.
+Enhance: Gain +2/+1 and Amped for 2 coins"
+,Shady Investment,2,Spell,Common,/,/,"Gain 1 Coin.
+Randomly add 2 Stolen Treasures to your Deck.
+Enhance: 4 Stolen Treasures instead for 1 Coin. "
+,Weapon Carrier,2,Creature,Uncommon,1/1,/,"Entrance: Give all creatures in your hand +0/+1.
+Enhance: +1/+0 instead for 1 Coin. "
+,Avian Murder,2,Creature,Uncommon,1/3,Flight,"After this deals direct damage, add a Doomed copy of this card to your hand without this effect.
+Devotion: When summoned, Unexhaust."
+,Big Game Poacher,3,Mercenary Creature,Common,2/4,/,"Enrage (Marked): Gain +1/+0.
+Enhance: Gain +0/+1 for 1 Coins.
+"
+,Cunning Snaremaster,3,Mercenary Creature,Common,1/4,Ranged,"Banes deal +1 damage.
+Activate: Shift all Banes up 1 position in all Decks.
+Enhance: 2 positions instead for 1 Coin."
+,Devilish Larceny,3,Spell,Uncommon,/,/,"Steal a random Innate card from your opponent's Primary Faction Zone.
+Enhance: Secondary Faction Zone instead for 1 Coin."
+,Flaming Arrow,3,Spell,Common,/,/,"Deal 3 damage to an enemy creature If it was Marked, shuffle this into your Deck from your Graveyard at the end of your turn."
+,Grave Robber,3,Creature,Common,3/1,/,"Entrance: Steal a random card from your opponent's Graveyard and give it Doomed.
+Enhance: Remove ""random"" for 2 Coins."
+,Heirloom Enchantment,3,Spell,Rare,/,/,"Give a friendly Innate creature +1/+1 and ""Last Word: Shuffle this card into your Deck.""
+Enhance: +2/+2 instead for 1 Coin."
+,Jagir Copymage,3,Creature,Uncommon,2/2,/,"Entrance: Copy a random card in your hand except Jagir Copymage.
+Enhance: Add ""The copied card costs 2 less Mana"" for 2 Coins."
+,Kleptomaniac,3,Mercenary Creature,Common,1/5,/,"After Enhancing, Mark a creature.
+Last Word: Add a copy of a Random Innate Marked non-Legendary creature except Kleptomaniac to your hand."
+,Pillaging Prince,3,Creature,Common,2/2,/,"Activate: Plunder then take 1 damage.
+Enhance: Gain +0/+2 for 2 Coins."
+,Recruitment Effort,3,Spell,Common,/,/,"Summon an Adventurer.
+Randomly add 2 Call to Arms into your deck.
+Enhance: 4 Call to Arms instead for 1 Coin."
+,Sultian Cutthroat,3,Mercenary Creature,Common,3/2,"Armoured, Backlash",Deathblow: Randomly add X Assassin's Strikes into your opponents Deck where X is this creatures attack.
+,Wealth Pummel,3,Spell,Common,/,/,"Gain a Coin.
+Deal damage to a creature equal to your total Coins."
+,Bombardier ,4,Mercenary Creature,Uncommon,3/6,Ranged,"Deathblow: Randomly add a Powder Keg into your opponent's deck.
+Enhance: Gain Multiblocker for 2 Coins."
+,Boomstick Ranger,4,Mercenary Creature,Common,4/3,"Quickstrike, Ranged","Deathblow: Give a random creature in your hand +1/+1
+Enhance +2/+2 instead for 1 Coin."
+,Potion of the Weald,4,Spell,Uncommon,/,/,"Shuffle all cards from your Graveyard into your Deck.
+Enhance: +2/+2 instead for 1 Coin."
+,Runecast Larcenist,4,Mercenary Creature,Common,3/5,"Multiblocker, Unyeilding","Last Word: Shift an active enemy Ritual or Enchantment to your Deck.
+Enhance: To your hand instead for 2 Coins. "
+,Temporary Resupply,4,Spell,Common,/,/,"Draw 4 cards then discard any not played to your Graveyard at the end of the turn.
+Enhance: Costs 2 less mana for 2 Coins."
+,Wandering Executioner ,4,Mercenary Creature,Common,2/3,/,"Entrance: Deal this creature's attack to another creature.
+Enhance: Gain +2/+0 for 2 Coins."
+,Altran's Armory,5,Spell,Rare,/,/,"Give all friendly Mercenaries Armoured.
+Enhance: Backlash instead for 3 coins."
+,Fall of Piata-Oras,5,Spell,Uncommon,/,/,"Shift the bottom X Banes from your opponents Deck to the top where X is the number of Coins you have.
+All players draw 1 card."
+,Heraldry of Kradam,5,Enchantment Spell,Rare,/,/,"Friendly creatures have +1/+0.
+Enrage (Mercenary): Gain a Coin."
+,Party of the Roaring Mutt,5,Mercenary Creature,Uncommon,3/2,/,"Entrance: Summon a Token copy of this creature without this ability
+Enhance: Gain +1/+1 for 2 Coins."
+,Passian Liquidator ,5,Creature,Common,3/6,/,"Enrage (Mercenary): Randomly add 2 Assassin's Strikes to your opponents Deck.
+Enhance: 3 instead for 1 Coin."
+,Priest of Kradam,5,Creature,Common,5/5,/,"Aftermath: Give friendly Mercenaries that dealt direct damage this turn +1/+0. 
+Enhance: +2/+0 instead fir 2 Coins."
+,Spellbook Forgery,5,Spell,Legendary,/,Doomed,"Plunder (Spells) 3 times.
+Enhance: 5 times instead for 3 Coins."
+,Worshiper of Kradam,5,Creature,Common,4/4,/,"Last Word: If your Deck contains no Neutral cards, Shift 3 random Innate cards from your opponent's Deck to their Graveyard."
+,Brutish Extortioner ,6,Creature,Common,4/7,Multiblocker,"Deathblow: Gain a Coin.
+Enhance: Gain +3/+0 for 2 Coins."
+,Fireball,6,Spell,Uncommon,/,/,"Deal X damage to an enemy creature and a third to adjacent creatures where x is mana spent to cast this.
+Enhance: Half instead for 1 Coin."
+,Forbidden Lotus,6,Spell,Legendary,/,/,"Shift the top third Innate cards of your opponent's Deck to their Graveyard.
+Enhance: To their Banish Zone instead for 3 Coins."
+,Munitionist ,6,Mercenary Creature,Common,6/4,"Quickstrike, Ranged","Entrance: Mark another friendly creature and give all Marked friendly creatures Ranged.
+Enhance: Quickstrike instead for 3 Coins."
+,Poison Bomb,6,Spell,Uncommon,/,/,"Poisoned creatures lose 2 health and all other summoned creatures become Poisoned.
+Enhance: Enemy creatures instead for 3 Coins."
+,Spymaster of the Guild,6,Mercenary Creature,Uncommon,5/5,"Quickstrike, Ranged","Entrance: Steal a random Innate card from yor opponents Deck and replace it with an Assassin's Strike.
+Enhance: Powder Keg instead for 1 Coin."
+,Sultian Swordman,6,Mercenary Creature,Rare,7/5,/,"Entrance: Select an enemy creature. If It is not Exhausted, Exhaust it.
+Devotion: It is Stunned as long as this creature is alive."
+,Torch Carrier,6,Creature,Uncommon,5/6,Taunt,"Entrance: Randomly add a Powder Keg to your opponent's deck.
+Last Word: Shift all Powder Kegs to the top of each Deck."
+,Barony Socialite,7,Mercenary Creature,Common,4/8,Restless,"Deathblow: Plunder (Creature)
+Enhance: Plunder (Spell) instead for 2 Coins."
+,Guildsmith,7,Creature,Uncommon,7/7,/,Turn Timers are now 20 seconds.
+,Dying Breath,8,Spell,Rare,/,/,"Summon 4 Last Word creatures from your Graveyard with 1 attack and health.
+Enhance: 2 attack and health instead for 3 Coins."
+,Jorgen the Stout,8,Mercenary Creature,Legendary,4/4,Multiblocker,"While in your hand, at the beginning of your turn, gain +1/+1.
+Enhance: Gains Amped and Restless for 3 Coins."
+,Paladin of Orallus,8,Mercenary Creature,Rare,8/4,"Amped, Armoured","Entrance: Give adjacent creatures Armoured until end of turn.
+Enhance: Add ""and Restless"" for 2 Coins."
+,Master Alchemist,9,Creature,Uncommon,6/8,/,"Activate: Lose 3 Coins then give all other friendly creatures +2/+2.
+Enhance: Gain Amped for 2 Coins."
+,"King Altaran, the Covetous",10,Creature,Legendary,8/10,/,"Activate: Duel an enemy creature. If it dies, Steal a random Innate card from your opponent's Deck.
+Enhance: Gain Amped for 1 Coin."
+,,,,,,/,
+,Adventurer,0,Mercenary Token,/,1/1,/,Last Word: Give a random creature in hand +1/+1.
+,Assassin's Strike,0,Bane,/,/,/,"When drawn, lose 1 Life.
+Draw another card."
+,Call to Arm,0,Boon,/,/,/,"When drawn, summon an Adventurer.
+Draw another card."
+,Stolen Tresure ,0,Boon,/,/,/,"When drawn, gain 2 Coins.
+Draw another card."

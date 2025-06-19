@@ -1,0 +1,93 @@
+3.0.1 Current,Name,Mana cost,Card Type,Rarity,Statline,Attributes / Statuses,Ability
+,Unshackle,0,Spell,Uncommon,/,/,Mobilize a creature from your Reserves for its mana cost.
+,Dungeon Instigator,1,Creature,Common,1/1,/,Last Word: Mobilize 2 or loss
+,Frenzied Fervor,1,Spell,Common,/,/,Unexhaust a friendly creature and it gains +2/+0 until end of turn.
+,Mana Harvester,1,Elemental Creature,Common,1/1,/,Acctivate: Gain 1 Mana this turn.
+,Skywatcher Sentry,1,Creature,Common,2/1,Flight,/
+,Trapjaw stump,1,Creature,Rare,1/2,Taunt,Blocked: Deal X damage to bthe locker before combat where X is this creatures attack.
+,Tribal Tactics,1,Spell,Uncommon,/,/,"Mobilize X or less where X is the number of firendly Nomads +1. Otherwise, Shift a creature from your Graveyard to your Reserves"
+,Trusight Tracker,1,Nomad Creature,Common,0/2,/,Activate: Mark a creature.
+,"Vexur, Death Evader",1,Creature,Legendary,2/2,"Amped, Quickstrike",Last Word: Shift this into your Reserves and it gains +1/+1
+,Hungry Mimic,2,Creature,Common,2/2,Amped,Blocked: Deal 1 damage to the blocker before combat.
+,Improvised Medic,2,Creature,Uncommon,0/2,/,"When a friendly creature is mobilized, gain 2 life Entrance: Mobilize 1 or less."
+,Killer bee of Urwuste,2,Creature,Uncommon,3/1,"Amped, Flight","Mobilized: gain +1/+0.
+Prepare: Sacrifice this creature."
+,Kularan Warpaint,2,Spell,Common,/,/,"Mark 2 creatures.
+Marked friendly creatures gain +1/+0. Marked enemy creatures gain -1/-0 until next turn."
+,Mimicry,2,Spell,Common,/,/,"Draw a card. if it was a non-Legendary creature, add another copy to your hand"
+,Rebellion's Spark,2,Elemental Creature,Uncommon,1/2,Armoured,Enrage(Elemental): Gain +1/+0.
+,Shredder Beast,2,Creature,Common,1/3,Armoured,Attacking: Shift the top creature from your Deck to your Reserves.
+,Spare None,2,Spell,Common,/,/,"Deal 2 damage to a creature. If it was Marked, 4 damage instead."
+,Taunting,2,Spell,Common,/,/,"Give a friendly creature Taunt and ""When this creature is blocked or targeted by an opponent as a result of Taunt, Draw a card."""
+,Wyvern Whisperer,2,Creature,Common,2/1,/,Entrance: Summon a Wyrmling. Devotion: Amped Wyrmling instead.
+,Cry for Numbers,3,Spell,Common,/,/,Shift the top 3 Innate creatures from your Deck to your Reserves.
+,Detoxis Shaman,3,Nomad Creature,Common,2/4,Backlash,Friendly creatures do not take Poison damage.
+,Drakth's Call,3,Spell,Legendary,/,Doomed,Summon a Totem of Drakth.
+,Energized Elemental,3,Elemental Creature,Uncommon,3/2,Amped,"Mobillized: Gain +1/+0. 
+Last Word: Deal 1 direct damage."
+,Gelatinous Mass,3,Ooze Creature,Uncommon,2/2,Taunt,Entrance: Give all creatures in your Reserves +1/+1.
+,Grow the Horde,3,Spell,Common,/,/,Choose twice: -Summon a Slime. -Summon a Wyrmling. -Summon a Goblin.
+,Hidebearer Huntress,3,Nomad Creature,Common,4/2,/,"Entrance: Other then Hidebearer Huntress, Mobilize X or less where X is the number of friendly Nomads."
+,Leyline Aligner,3,Elemental Creature,Common,3/3,/,"When mobilized, add a copy of all friendly Elementals except Leyline Aligner into your Reserves."
+,Monsterous Spore,3,Creature,Common,2/3,/,"Entrance: Draw 2 cards, discard any spells drawn to the Graveyard."
+,Slime Prospector,3,Creature,Common,1/4,/,Activate: Summon a Slime.
+,Smoke Signal,3,Ritual Spell,Common,/,/,"After 2 turns, Mobilize 5 or less. Otherwise, summon a random 5 or less mana cost creature from your Primary Faction Zone."
+,Something Wicked Approaches,3,Spell,Common,/,/,"Fetch 1 (Non-Legendary Creature). If you have 3+ cards in your Reserves, repeat once."
+,Vengeful Empath,3,Creature,Uncommon,1/3,/,"Enrage(Innate): Gain +1/+0.
+Devotion: When enraged, Mobilize 1 or less."
+,Aetherial Rift,4,Spell,Common,/,/,"Shuffle 2 Surges into your Deck  and gain 4 Mana.
+Devotion: Shuffle 3 instead."
+,Bighorn Packbeast,4,Creature,Rare,2/6,"Multiblocker, Unyielding",Wounded: Mobilize X or less where X is the health lost.
+,Carrion Decomposer ,4,Ooze Creature,Rare,3/3,/,"Summoning 2 Slimes in a single turn mobilizes this card
+Entrance: Add a copy of this card to your Reserves."
+,Heartshade Protector,4,Nomad Creature,Uncommon,3/5,Multiblocker,"Deathblow: If the killed creature was Innate and Marked, Shift it to your Reserves."
+,Lavoraad Whelp,4,Creature,Common,4/3,Flight,Activate: Deal 2 direct damage then take 2 damage.
+,Mob Rule,4,Spell,Common,/,/,Deal 2 damage to an enemy creature. Repeat once for each friendly creature.
+,Roam the Wild,4,Spell,Common,/,/,"(Reservable)
+Give all creatures in your Reserves +1/+1 and draw 2 cards."
+,Boneface Berserker,5,Nomad Creature,Common,6/4,/,"Mobilized: Gain +0/+2.
+Entrance: Duel an enemy creature."
+,Equilibrium,5,Spell,Common,/,/,Shift a friendly Innate creature into your Reserves then Mobilize another creature with the same mana cost or less.
+,Gelatinize,5,Spell,Common,/,/,"Mobilize 5 or less.
+The mobilized creature gains +2/+2 and also becomes an Ooze."
+,Global Promotions,5,Spell,Uncommon,/,/,Banish all friendly Innate creatures then summon random replacement that cost 1 more Mana.
+,"Gurm, Former Taskmaster",5,Elemental Creature,Legendary,3/5,"Amped, Ranged","Mobilized: Deal X damage to an enemy creature where X is this creature's attack.
+Activate: Give another creature +2/-2."
+,Seething Speardancer,5,Nomad Creature,Uncommon,5/3,"Ranged, Quickstrike",Reserved / Mobilized: Draw a card.
+,Sporecaster,5,Creature,Common,2/2,/,"Mobilized: draw 3 cards.
+Entrance: Your opponent gains control.
+Aftermath: Lose 3 Life."
+,Chained No More,5,Spell,Common,/,/,Unexhaust all friendly creatures and give them Restless until end of turn.
+,Worshipper of Drakth,5,Creature,Common,4/4,/,"Last Word: If your deck contains no Neutral cards, Shift the top 3 creatures in your Graveyard into your Reserves."
+,Zealous Ooze,5,Ooze Creature,Uncommon,4/4,/,"When reserved: Summon a Slime.
+Entrance: Summon a Token copy of this creature without any abilities and half it's stats."
+,Poisoned Darts,6,Enchantment Spell,Rare,/,/,"(Reservable)
+Prepare: If a creature which could have attacked did not attack on its owners turn, it becomes Poisoned."
+,Gorging Jelly,6,Ooze Creature,Uncommon,5/5,/,"Entrance: Banish another creature.
+Last Word: Return the banished creature."
+,Serrated Stalker,6,Creature,Uncommon,4/4,/,"Entrance: If Outnumbered, kill your opponent's highest attack creature.
+Last Word: Mobilize 4 or less."
+,Sludge Defender,6,Ooze Creature,Uncommon,3/5,"Taunt, Unyielding",Last Word: Summon a Slime.
+,Sudden Onslaught,6,Spell,Uncommon,/,/,"Mobilize 3 or Less 3 times.
+Draw a card for each Mobilize that didn't trigger."
+,Glorious Overseer,7,Elemental Creature,Uncommon,5/5,/,"Other Friendly creatures have +1/+1.
+Prepare: Mobilize 2 or less."
+,Noctournal Nemesis,7,Creature,Uncommon,4/7,Backlash,"Entrance: Mark a creature.
+Last Word: Kill a Marked enemy creature."
+,Carnivorous Cobra,8,Creature,Uncommon,8/5,/,"Adjacent creatures have +2/+0.
+Last Word: Mobilize 5 or less."
+,"Dyani, Tribe Leader",8,Nomad Creature,Legendary,9/7,Unyielding,"Aftermath: If an enemy creature died this turn, give all enemy creatures -1/-0 and all other friendly Nomads +1/+0."
+,Rage Beast,8,Creature,Rare,4/10,Unyielding,"If this kills a creature while blocking, it can block again.
+Devotion: While summoned this has Restless."
+,"Xyron, Acidic Overlord",9,Ooze Creature,Legendary,7/7,/,"Enrage (Innate): Summon a Slime.
+Enrage (Ooze): Summon a Slime."
+,Lumbering Striker,10,Creature,Rare,10/10,Multiblocker,Deathblow: Mobilize the highest mana cost creature in your Reserves.
+,Overwhelming Magi,10,Creature,Rare,7/7,/,"Mobilized: Gain +2/+0.
+Entrance: Kill all other creatures with X or less attack where X is this creature's attack."
+,,,,,,,
+,Goblin,0,Token,/,2/1,Amped,/
+,Slime ,0,Ooze Token,/,1/1,/,Activate: Banish this creature then give adjacent Oozes +1/+1.
+,Surge,0,Boon,/,/,/,"When drawn, gain 2 Mana.
+Draw another card."
+,Totem of Drakth,0,Token,/,0/2,Pacifist,"When you summon an Innate creature, draw a card and gain 1 Mana. Aftermath: Banish this creature."
+,Wyrmling,0,Token,/,1/2,Flight,

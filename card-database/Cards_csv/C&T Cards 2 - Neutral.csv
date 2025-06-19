@@ -1,0 +1,41 @@
+3.0.1 Current,Name,Mana cost,Card Type,Rarity,Statline,Attributes / Statuses,Ability
+,Dedicated Butler,1,Underling Creature,Common,1/2,/,/
+,Moose Calf,1,Creature,Uncommon,1/1,Quickstrike,Deathblow: Gain +3/+3.
+,Orallus Healer,1,Crusader Creature,Uncommon,1/1,/,Entrance: Gain 1 Life
+,Penitent Follower,1,Crusader Creature,Common,1/2,Backlash,/
+,Travelling Medic,1,Creature,Common,1/1,/,Entrance: Give another firendly Innate creature +0/+2. 
+,Adept Gunsmith,2,Creature,Common,2/2,/,"Entrance: Mark another friendly non-Ranged creature and give it Ranged.
+Last Word: Suppress that creature. "
+,Eager Farmer,2,Mercenary Creature,Common,3/2,/,/
+,Local Gravekeeper,2,Creature,Uncommon,2/3,/,Aftermath: Banish a random card from your opponent's Graveyard.
+,Sunburnt Monk,2,Crusader Creature,Common,1/3,/,Attacking: Has +2/+0.
+,Territorial Dove,2,Creature,Common,1/2,Flight,/
+,Cautious Hunting Party,3,Creature,Common,2/1,"Ranged, Quickstrike",Entrance: Summon a Token copy of this creature without this ability.
+,Disturbed Spirit,3,Undead Creature,Common,3/1,Flight,/
+,Faithful Steed,3,Creature,Uncommon,2/2,Amped,Last Word: A random friendly creature gains +1/+1.
+,Gate Guardian,3,Creature,Common,2/4,/,/
+,Missionary Vanguard,3,Crusader Creature,Uncommon,3/3,Armoured,Entrance: Select any summoned non-Crusader creature. It is now a Crusader
+,Shifty Inquistor,3,Crusader Creature,Common,3/2,/,Entrance: Choose an active enemy Ritual or Enchantment and shuffle it back into their Deck.
+,Stalwart Guard,3,Creature,Common,1/5,Taunt,/
+,Sunfire Evoker,3,Crusader Creature,Common,2/3,"Ranged, Quickstrike","Entrance: If you control more than 4 friendly Crusaders, deal X direct damage where X is this creatures attack."
+,Bergemian Stag,4,Creature,Uncommon,4/4,"Multiblocker, Restless",/
+,"Garenan, Trading Prince",4,Creature,Legendary,0/4,Pacifist,"Gain 1 Life when your opponent draws a card.
+Activate: Draw a card."
+,Orcish Explorer,4,Creature,Common,5/3,/,/
+,Righteous Bannerman,4,Crusader Creature,Common,4/3,/,Entrance: Fetch 1 (Neutral Creature)
+,Stellar Shard,4,Creature,Uncommon,6/6,/,Prepare: Lose 1 life. 
+,Warcamp Follower,4,Crusader Creature,Uncommon,2/6,Multiblocker,Enrage (Crusader) Deal 1 direct damage.
+,Blessed Guardsman,5,Crusader Creature,Common,5/5,/,"When an opponent gains Life from a source other than a Blessed Guardsman, you gain Life instead."
+,Mana Miser,5,Creature,Uncommon,3/7,/,"Aftermath: If you 3 or more unspent Mana, convert it into a Mana Fragment."
+,Orallus Mirrorknight,5,Crusader Creature,Rare,2/2,/,Aftermath: Summon a Token copy of this creature without this ability.
+,Prince's Champion,5,Creature,Common,6/6,/,/
+,Skill Siphoner,5,Creature,Rare,3/5,/,Entrance: Remove all Attributes from an enemy creature then gain those Attributes.
+,Ancestral Elephant,6,Creature,Common,6/5,Amped,Deathblow: Gain +1/+1.
+,Councilman Lazar,6,Crusader Creature,Legendary,7/5,"Taunt, Armoured","Entrance: Give your Crusaders not in play +1/+0
+Last Word: Give your Crusaders not in play +0/+1."
+,Monstrous Sloth,6,Creature,Common,6/8,/,/
+,"Fanglor, the Last Amaroq",7,Creature,Legendary,7/7,"Amped, Restless",Deathblow: Banish this creature then resummon it next turn.
+,Scanduran Apothecary,7,Creature,Uncommon,3/7,/,Last Word: Gain 7 Life.
+,Sunlight Elemental,8,Elemental Creature,Uncommon,8/8,/,Other friendly Neutral creatures have +1/+1.
+,Untaming Destroyer,8,Elemental Creature,Rare,5/10,"Restless, Amped",Deathblow: Gain 2 Life.
+,Avatar of Peace,9,Elemental Creature,Rare,9/9,"Taunt, Multiblocker",Entrance: Pacify another creature.

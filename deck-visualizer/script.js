@@ -11,6 +11,8 @@ class DeckVisualizer {
         this.deckCountSpan = document.getElementById('deck-count');
         this.factionFilter = document.getElementById('faction-filter');
         this.searchFilter = document.getElementById('search-filter');
+        this.sortFilter = document.getElementById('sort-filter');
+        this.orderFilter = document.getElementById('order-filter');
         this.deckNameInput = document.getElementById('deck-name');
         this.primaryFactionSelect = document.getElementById('primary-faction');
         this.secondaryFactionSelect = document.getElementById('secondary-faction');
@@ -23,16 +25,43 @@ class DeckVisualizer {
         this.setupEventListeners();
         this.loadDeckFromURL();
         this.populateFactionFilter();
+        
+        // Préchargement intelligent des images les plus courantes
+        this.preloadCommonImages();
+        
         this.displayAvailableCards();
         this.displayDeckCards();
         this.updateDeckURL();
         this.updateDeckCount();
     }
 
+    preloadCommonImages() {
+        // Précharger quelques images communes pour améliorer l'UX
+        const commonCards = [
+            'Life Elixir', 'Sell-Sword', 'Decoy', 'Adventurer', 
+            'Call to Arms', 'Assassin\'s Strike', 'Stolen Treasure'
+        ];
+        
+        const seasons = ['Core', 'Season1', 'Season2'];
+        const factionFolders = ['AugurOrder', 'DungeonMaster', 'Neutral', 'PlunderingGuild', 'WildHorde'];
+        
+        setTimeout(() => {
+            commonCards.forEach(cardName => {
+                factionFolders.forEach(folder => {
+                    seasons.forEach(season => {
+                        const imagePath = `../card-database/Cards_images/${season}/${folder}/${cardName}.png`;
+                        // Précharger l'image
+                        const img = new Image();
+                        img.src = imagePath;
+                    });
+                });
+            });
+        }, 1000); // Attendre que la page soit chargée
+    }
+
     async loadCards() {
         try {
-            const response = await fetch('../card-database/cards.json');
-            this.cards = await response.json();
+            this.cards = await this.loadCardsFromCSV();
         } catch (error) {
             console.error('Error loading cards:', error);
             // Fallback with some default cards
@@ -41,6 +70,320 @@ class DeckVisualizer {
                 { "id": 2, "name": "Cave Ogre", "cost": 5, "faction": "PG", "image": "ogre.jpg" }
             ];
         }
+    }
+
+    async loadCardsFromCSV() {
+        // Afficher un indicateur de chargement
+        const availableCardsGrid = document.getElementById('available-cards');
+        const deckContainer = document.getElementById('deck-container');
+        
+        availableCardsGrid.innerHTML = '<div class="loading-message">🃏 Chargement des cartes...</div>';
+        deckContainer.innerHTML = '<div class="loading-message">🃏 Préparation du deck...</div>';
+        
+        const csvFiles = [
+            { file: 'C&T Cards 2 - Augur Order.csv', faction: 'AO' },
+            { file: 'C&T Cards 2 - Dungeon Master.csv', faction: 'DM' },
+            { file: 'C&T Cards 2 - Neutral.csv', faction: 'N' },
+            { file: 'C&T Cards 2 - Plundering Guild.csv', faction: 'PG' },
+            { file: 'C&T Cards 2 - Wild Horde.csv', faction: 'WH' }
+        ];
+
+        // Créer d'abord un index de toutes les images disponibles
+        this.imageIndex = await this.buildImageIndex();
+
+        const allCards = [];
+        let cardId = 1;
+
+        for (const csvInfo of csvFiles) {
+            try {
+                const response = await fetch(`../card-database/Cards_csv/${csvInfo.file}`);
+                const csvText = await response.text();
+                const cards = this.parseCSV(csvText, csvInfo.faction, cardId);
+                allCards.push(...cards);
+                cardId += cards.length;
+            } catch (error) {
+                console.error(`Error loading ${csvInfo.file}:`, error);
+            }
+        }
+
+        // Afficher un message de chargement des images
+        availableCardsGrid.innerHTML = '<div class="loading-message">🖼️ Chargement des images...</div>';
+        
+        // Charger toutes les images en une seule fois
+        await this.setImagePathsAsync(allCards);
+
+        return allCards;
+    }
+
+    async buildImageIndex() {
+        const imageIndex = {};
+        const seasons = ['Core', 'Season1', 'Season2', 'Tutorial'];
+        const factionFolders = {
+            'AO': 'AugurOrder',
+            'DM': 'DungeonMaster', 
+            'N': 'Neutral',
+            'PG': 'PlunderingGuild',
+            'WH': 'WildHorde'
+        };
+
+        for (const season of seasons) {
+            for (const [factionCode, folderName] of Object.entries(factionFolders)) {
+                try {
+                    // Pour chaque combinaison saison/faction, on essaie de récupérer la liste des fichiers
+                    // Comme on ne peut pas lister directement, on va tester les images quand on en aura besoin
+                    const basePath = `../card-database/Cards_images/${season}/${folderName}/`;
+                    if (!imageIndex[factionCode]) {
+                        imageIndex[factionCode] = {};
+                    }
+                    if (!imageIndex[factionCode][season]) {
+                        imageIndex[factionCode][season] = basePath;
+                    }
+                } catch (error) {
+                    console.log(`No images found for ${season}/${folderName}`);
+                }
+            }
+        }
+
+        return imageIndex;
+    }
+
+    normalizeCardName(name) {
+        // Normalise le nom pour la correspondance avec les fichiers
+        return name
+            .trim()
+            .replace(/\s+/g, ' ') // Normalise les espaces multiples
+            .replace(/,\s*/g, ', ') // Normalise les virgules
+            .replace(/'/g, "'") // Remplace les apostrophes courbes
+            .replace(/"/g, '"') // Remplace les guillemets courbes
+            .replace(/–/g, '-') // Remplace les tirets longs
+            .replace(/—/g, '-'); // Remplace les tirets cadratin
+    }
+
+    async getImagePath(cardName, faction) {
+        // Cache pour éviter les requêtes redondantes
+        if (!this.imageCache) {
+            this.imageCache = new Map();
+        }
+
+        const cacheKey = `${faction}-${cardName}`;
+        if (this.imageCache.has(cacheKey)) {
+            return this.imageCache.get(cacheKey);
+        }
+
+        const normalizedName = this.normalizeCardName(cardName);
+        const seasons = ['Core', 'Season1', 'Season2', 'Tutorial'];
+        const factionFolders = {
+            'AO': 'AugurOrder',
+            'DM': 'DungeonMaster', 
+            'N': 'Neutral',
+            'PG': 'PlunderingGuild',
+            'WH': 'WildHorde'
+        };
+
+        const folderName = factionFolders[faction] || 'Neutral';
+
+        // Optimise les variantes les plus communes d'abord
+        const nameVariants = this.getNameVariants(normalizedName);
+
+        // Recherche optimisée avec early return
+        const imagePath = await this.findImageWithCache(seasons, folderName, nameVariants);
+        
+        // Cache le résultat
+        this.imageCache.set(cacheKey, imagePath);
+        return imagePath;
+    }
+
+    getNameVariants(normalizedName) {
+        // Mapping direct pour les corrections connues (plus rapide)
+        const directMappings = {
+            'Zarothrix, Archanist Supreme': 'Zarothrix, Arcanist Supreme',
+            'Vicarous Arcane Eater': 'Vicarious Arcane Eater',
+            'Great Revilatalization': 'Great Revitalization',
+            'Ritual of Anniihilation': 'Ritual of Annihilation',
+            'Shifty Inquistor': 'Shifty Inquisitor',
+            'Killer bee of Urwuste': 'Killer Bee of Urwuste',
+            'Jorgen the Stout': 'Jorgen, the Stout',
+            'Call to Arm': 'Call to Arms',
+            'Dishonor Among Theives': 'Dishonor Among Thieves',
+            'Meager Mideed': 'Meager Misdeed',
+            'Altran\'s Armory': 'Altaran\'s Armory',
+            'Sultian Cutthroat': 'Sulitian Cutthroat',
+            'Sultian Swordman': 'Sulitian Swordsman',
+            'Passian Liquidator': 'Passanian Liquidator',
+            'Stolen Tresure': 'Stolen Treasure',
+            'Preplaned Prophecy': 'Preplanned Prophecy',
+            'Convert Contractor': 'Covert Contractor',
+            'Unfullfilled Obligation': 'Unfulfilled Obligation',
+            'Copyright Infringment': 'Copyright Infringement',
+            'Grant Tutoring': 'Grand Tutoring',
+            'Lunareals Light': 'Lunareals Light',
+            'Merchand\'s Guard': 'Merchant\'s Guard',
+            'Resourse Equalization': 'Resource Equalization',
+            'Mastecraft Flesh Golem': 'Mastercraft Flesh Golem',
+            'Echoes of Verentihil': 'Echoes of Verenthil'
+        };
+
+        // Vérifier d'abord le mapping direct
+        if (directMappings[normalizedName]) {
+            return [directMappings[normalizedName], normalizedName];
+        }
+
+        // Générer les variantes les plus communes
+        return [
+            normalizedName,
+            normalizedName.replace(' Or ', ' or '),
+            normalizedName.replace(' And ', ' and '),
+            normalizedName.replace(' The ', ' the '),
+            normalizedName.replace(' Of ', ' of '),
+            normalizedName.replace('Theives', 'Thieves'),
+            normalizedName.replace('Mideed', 'Misdeed'),
+            normalizedName.replace('Swordman', 'Swordsman'),
+            normalizedName.replace('bee ', 'Bee '),
+            normalizedName.replace('Killer bee', 'Killer Bee')
+        ].filter((variant, index, arr) => arr.indexOf(variant) === index); // Supprime les doublons
+    }
+
+    async findImageWithCache(seasons, folderName, nameVariants) {
+        // Cache des requêtes HEAD pour éviter les requêtes multiples
+        if (!this.headCache) {
+            this.headCache = new Map();
+        }
+
+        for (const season of seasons) {
+            for (const nameVariant of nameVariants) {
+                const imagePath = `../card-database/Cards_images/${season}/${folderName}/${nameVariant}.png`;
+                
+                // Vérifier le cache des HEAD requests
+                if (this.headCache.has(imagePath)) {
+                    if (this.headCache.get(imagePath)) {
+                        return imagePath;
+                    }
+                    continue; // Skip si on sait déjà que l'image n'existe pas
+                }
+
+                // Test si l'image existe avec timeout
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 3000); // 3s timeout
+                    
+                    const response = await fetch(imagePath, { 
+                        method: 'HEAD',
+                        signal: controller.signal
+                    });
+                    
+                    clearTimeout(timeoutId);
+                    const exists = response.ok;
+                    this.headCache.set(imagePath, exists);
+                    
+                    if (exists) {
+                        return imagePath;
+                    }
+                } catch (error) {
+                    this.headCache.set(imagePath, false);
+                    if (error.name !== 'AbortError') {
+                        console.debug(`Failed to check image: ${imagePath}`);
+                    }
+                }
+            }
+        }
+
+        // Si aucune image n'est trouvée, retourne un chemin par défaut
+        const defaultPath = `../card-database/Cards_images/Core/${folderName}/${nameVariants[0]}.png`;
+        console.warn(`Image not found for card: ${nameVariants[0]} (faction: ${folderName})`);
+        return defaultPath;
+    }
+
+    parseCSV(csvText, faction, startId) {
+        const lines = csvText.split('\n');
+        const cards = [];
+        let currentId = startId;
+
+        // Skip header line and empty lines
+        for (let i = 1; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (!line || line.startsWith(',,,')) continue; // Skip empty lines and token lines
+
+            const columns = this.parseCSVLine(line);
+            
+            // Skip if not enough columns or empty name
+            if (columns.length < 3 || !columns[1] || columns[1].trim() === '') continue;
+
+            const name = columns[1].trim();
+            const manaCost = columns[2].trim();
+            const cardType = columns[3] ? columns[3].trim() : '';
+            const rarity = columns[4] ? columns[4].trim() : '';
+            const statline = columns[5] ? columns[5].trim() : '';
+            const attributes = columns[6] ? columns[6].trim() : '';
+            const ability = columns[7] ? columns[7].trim() : '';
+
+            // Parse mana cost (convert to number, default to 0 if invalid)
+            let cost = 0;
+            if (manaCost && !isNaN(parseFloat(manaCost))) {
+                cost = parseInt(parseFloat(manaCost));
+            }
+
+            const card = {
+                id: currentId++,
+                name: name,
+                cost: cost,
+                faction: faction,
+                type: cardType,
+                rarity: rarity,
+                statline: statline,
+                attributes: attributes,
+                ability: ability,
+                image: null // Will be set asynchronously
+            };
+
+            cards.push(card);
+        }
+
+        return cards;
+    }
+
+    async setImagePathsAsync(cards) {
+        // Traiter les cartes par batch pour éviter de surcharger le réseau
+        const batchSize = 10;
+        const batches = [];
+        
+        for (let i = 0; i < cards.length; i += batchSize) {
+            batches.push(cards.slice(i, i + batchSize));
+        }
+        
+        for (const batch of batches) {
+            // Traiter chaque batch en parallèle
+            const promises = batch.map(async (card) => {
+                card.image = await this.getImagePath(card.name, card.faction);
+            });
+            
+            await Promise.all(promises);
+        }
+        
+        // Refresh display seulement une fois à la fin quand toutes les images sont prêtes
+        this.displayAvailableCards();
+        this.displayDeckCards();
+    }
+
+    parseCSVLine(line) {
+        const result = [];
+        let current = '';
+        let inQuotes = false;
+        
+        for (let i = 0; i < line.length; i++) {
+            const char = line[i];
+            
+            if (char === '"') {
+                inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+                result.push(current);
+                current = '';
+            } else {
+                current += char;
+            }
+        }
+        
+        result.push(current);
+        return result;
     }
 
     setupEventListeners() {
@@ -76,6 +419,14 @@ class DeckVisualizer {
         });
 
         this.searchFilter.addEventListener('input', () => {
+            this.displayAvailableCards(); // Only the collection is updated
+        });
+
+        this.sortFilter.addEventListener('change', () => {
+            this.displayAvailableCards(); // Only the collection is updated
+        });
+
+        this.orderFilter.addEventListener('change', () => {
             this.displayAvailableCards(); // Only the collection is updated
         });
 
@@ -343,8 +694,8 @@ class DeckVisualizer {
                 if (card) {
                     this.addCardToDeck(card.name); // Error messages are handled in addCardToDeck
                 }
-    });
-});
+            });
+        });
     }
 
     displayDeckCards() {
@@ -401,14 +752,19 @@ class DeckVisualizer {
         const isCardAllowed = allowedFactions.includes(card.faction);
         const disabledClass = (quantity === 0 && !isCardAllowed) ? 'card-disabled' : '';
         
+        // N'afficher l'image que si le chemin est disponible, sinon afficher le placeholder
+        const imageHTML = imagePath ? 
+            `<img src="${imagePath}" alt="${card.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+             <div class="card-placeholder" style="display: none;">📜 ${card.name}</div>` :
+            `<div class="card-placeholder" style="display: flex;">📜 ${card.name}</div>`;
+        
         return `
             <div class="card ${quantity > 0 ? 'deck-card' : ''} ${disabledClass} faction-${card.faction.toLowerCase().replace(/\s+/g, '-')}" 
                  data-card-id="${card.id}">
                 <div class="quantity-badge faction-${card.faction.toLowerCase()}-bg">${displayQuantity}</div>
                 ${quantity > 0 ? '<button class="remove-btn" onclick="event.stopPropagation();">×</button>' : ''}
                 ${!isCardAllowed && quantity === 0 ? '<div class="disabled-overlay"><div class="disabled-message"><div class="disabled-emoji">🚫</div><div class="disabled-text">Not in selected factions</div></div></div>' : ''}
-                <img src="${imagePath}" alt="${card.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-placeholder" style="display: none;">📜 ${card.name}</div>
+                ${imageHTML}
             </div>
         `;
     }
@@ -444,11 +800,11 @@ class DeckVisualizer {
 
     populateFactionFilter() {
         const factions = [
-            { code: 'DM', emoji: '🟣', name: 'DM' },
-            { code: 'PG', emoji: '🔴', name: 'PG' },
-            { code: 'WH', emoji: '🟢', name: 'WH' },
-            { code: 'AO', emoji: '🔵', name: 'AO' },
-            { code: 'N', emoji: '⚫', name: 'N' }
+            { code: 'DM', emoji: '🟣', name: 'Dungeon Master' },
+            { code: 'PG', emoji: '🔴', name: 'Plundering Guild' },
+            { code: 'WH', emoji: '🟢', name: 'Wild Horde' },
+            { code: 'AO', emoji: '🔵', name: 'Augur Order' },
+            { code: 'N', emoji: '⚫', name: 'Neutral' }
         ];
         
         this.factionFilter.innerHTML = '<option value="">🌈 All Factions</option>';
@@ -458,6 +814,14 @@ class DeckVisualizer {
             option.textContent = `${faction.emoji} ${faction.name}`;
             this.factionFilter.appendChild(option);
         });
+
+        // Populate primary and secondary faction selects
+        const primaryAndSecondaryFactions = factions.filter(f => f.code !== 'N'); // Exclude Neutral as primary/secondary
+        const factionOptions = '<option value="">Select Faction</option>' + 
+            primaryAndSecondaryFactions.map(faction => `<option value="${faction.code}">${faction.emoji} ${faction.name}</option>`).join('');
+        
+        this.primaryFactionSelect.innerHTML = factionOptions;
+        this.secondaryFactionSelect.innerHTML = factionOptions;
     }
 
     showToast(message) {
@@ -716,14 +1080,68 @@ class DeckVisualizer {
     getFilteredCards() {
         const factionFilter = this.factionFilter.value;
         const searchTerm = this.searchFilter.value.toLowerCase();
+        const sortBy = this.sortFilter.value;
+        const sortOrder = this.orderFilter.value;
 
-        const filteredCards = this.cards.filter(card => {
+        let filteredCards = this.cards.filter(card => {
             const matchesFaction = !factionFilter || card.faction === factionFilter;
-            const matchesSearch = !searchTerm || card.name.toLowerCase().includes(searchTerm);
+            const matchesSearch = !searchTerm || 
+                card.name.toLowerCase().includes(searchTerm) ||
+                (card.type && card.type.toLowerCase().includes(searchTerm)) ||
+                (card.ability && card.ability.toLowerCase().includes(searchTerm));
             return matchesFaction && matchesSearch;
         });
 
+        // Apply sorting
+        filteredCards.sort((a, b) => {
+            let comparison = 0;
+            
+            switch (sortBy) {
+                case 'mana':
+                    comparison = a.cost - b.cost;
+                    // Secondary sort by name if mana is equal
+                    if (comparison === 0) {
+                        comparison = a.name.localeCompare(b.name);
+                    }
+                    break;
+                case 'rarity':
+                    comparison = this.compareRarity(a.rarity, b.rarity);
+                    // Secondary sort by name if rarity is equal
+                    if (comparison === 0) {
+                        comparison = a.name.localeCompare(b.name);
+                    }
+                    break;
+                case 'type':
+                    comparison = (a.type || '').localeCompare(b.type || '');
+                    // Secondary sort by name if type is equal
+                    if (comparison === 0) {
+                        comparison = a.name.localeCompare(b.name);
+                    }
+                    break;
+                case 'name':
+                default:
+                    comparison = a.name.localeCompare(b.name);
+                    break;
+            }
+            
+            return sortOrder === 'desc' ? -comparison : comparison;
+        });
+
         return filteredCards;
+    }
+
+    compareRarity(rarityA, rarityB) {
+        const rarityOrder = {
+            'Common': 1,
+            'Uncommon': 2,
+            'Rare': 3,
+            'Legendary': 4
+        };
+        
+        const valueA = rarityOrder[rarityA] || 0;
+        const valueB = rarityOrder[rarityB] || 0;
+        
+        return valueA - valueB;
     }
 }
 
