@@ -12,57 +12,51 @@
 <body>
     <div class="container">
         <header>
-            <h1><a href="../" class="home-link">🍻 Cards & Tankards 🍻</a></h1>
-            <div class="deck-info">
-                <div class="deck-name-and-factions">
-                    <div class="deck-name-section">
-                        <label for="deck-name">📜 Deck name:</label>
-                        <input type="text" id="deck-name" placeholder="My legendary deck..." maxlength="50">
-                    </div>
-                    <div class="faction-selectors">
-                        <div class="faction-select">
-                            <label for="primary-faction">⚔️ Primary:</label>
-                            <select id="primary-faction">
-                                <option value="">Choose...</option>
-                                <option value="DM">🟣 DM</option>
-                                <option value="PG">🔴 PG</option>
-                                <option value="WH">🟢 WH</option>
-                                <option value="AO">🔵 AO</option>
-                                <option value="N">⚫ N</option>
-                            </select>
-                        </div>
-                        <div class="faction-select">
-                            <label for="secondary-faction">🛡️ Secondary:</label>
-                            <select id="secondary-faction">
-                                <option value="">None</option>
-                                <option value="DM">🟣 DM</option>
-                                <option value="PG">🔴 PG</option>
-                                <option value="WH">🟢 WH</option>
-                                <option value="AO">🔵 AO</option>
-                                <option value="N">⚫ N</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="url-display">
-                <label for="deck-url">🔗 Deck sharing link:</label>
-                <div class="url-input-container">
-                    <input type="text" id="deck-url" readonly>
-                    <button id="copy-url">📜 Copy</button>
-                    <button id="copy-decklist">📋 Copy Text Decklist</button>
-                </div>
-            </div>
+            <h1><a href="../" class="home-link">🍻 Cards & Tankards - Deck builder 🍻</a></h1>
         </header>
 
         <div class="main-content">
             <div class="available-cards-section">
                 <h2>🃏 Card Collection</h2>
                 <div class="filter-controls">
-                    <select id="faction-filter">
-                        <option value="">All factions</option>
-                    </select>
-                    <input type="text" id="search-filter" placeholder="🔍 Search for a card...">
+                    <div class="faction-filter-dropdown">
+                        <button class="faction-filter-button" id="faction-filter-button">
+                            <span class="faction-filter-text">🌈 All Factions</span>
+                            <span class="dropdown-arrow">▼</span>
+                        </button>
+                        <div class="faction-filter-list" id="faction-filter-list">
+                            <label class="faction-checkbox-item">
+                                <input type="checkbox" id="faction-all" value="" checked>
+                                <span class="checkmark"></span>
+                                🌈 All Factions
+                            </label>
+                            <label class="faction-checkbox-item">
+                                <input type="checkbox" id="faction-dm" value="DM">
+                                <span class="checkmark"></span>
+                                🟣 Dungeon Master
+                            </label>
+                            <label class="faction-checkbox-item">
+                                <input type="checkbox" id="faction-pg" value="PG">
+                                <span class="checkmark"></span>
+                                🔴 Plundering Guild
+                            </label>
+                            <label class="faction-checkbox-item">
+                                <input type="checkbox" id="faction-wh" value="WH">
+                                <span class="checkmark"></span>
+                                🟢 Wild Horde
+                            </label>
+                            <label class="faction-checkbox-item">
+                                <input type="checkbox" id="faction-ao" value="AO">
+                                <span class="checkmark"></span>
+                                🔵 Augur Order
+                            </label>
+                            <label class="faction-checkbox-item">
+                                <input type="checkbox" id="faction-n" value="N">
+                                <span class="checkmark"></span>
+                                ⚫ Neutral
+                            </label>
+                        </div>
+                    </div>
                     <select id="sort-filter">
                         <option value="name">📝 Sort by Name</option>
                         <option value="mana">💎 Sort by Mana</option>
@@ -73,6 +67,7 @@
                         <option value="asc">⬆️ Ascending</option>
                         <option value="desc">⬇️ Descending</option>
                     </select>
+                    <input type="text" id="search-filter" placeholder="🔍 Search for a card...">
                 </div>
                 <div id="available-cards" class="cards-grid"></div>
             </div>
@@ -80,11 +75,41 @@
             <div class="deck-section">
                 <div class="deck-header">
                     <div class="deck-header-text">
-                        <h2>⚔️ Your Deck</h2>
+                        <div class="deck-title-container">
+                            <input type="text" id="deck-title" placeholder="Deck name" value="">
+                        </div>
                         <div id="deck-count" class="deck-count">(0/40 cards)</div>
                     </div>
                     <button id="clear-deck">🗑️</button>
                 </div>
+                
+                <div class="deck-info">
+                    <div class="faction-selectors">
+                        <select id="primary-faction">
+                            <option value="">⚔️ Primary faction...</option>
+                            <option value="DM">🟣 DM</option>
+                            <option value="PG">🔴 PG</option>
+                            <option value="WH">🟢 WH</option>
+                            <option value="AO">🔵 AO</option>
+                            <option value="N">⚫ N</option>
+                        </select>
+                        <select id="secondary-faction">
+                            <option value="">🛡️ Secondary faction...</option>
+                            <option value="DM">🟣 DM</option>
+                            <option value="PG">🔴 PG</option>
+                            <option value="WH">🟢 WH</option>
+                            <option value="AO">🔵 AO</option>
+                            <option value="N">⚫ N</option>
+                        </select>
+                    </div>
+                    <div class="url-display">
+                        <div class="url-input-container">
+                            <button id="copy-url">📜 Copy Decklist Link</button>
+                            <button id="copy-decklist">📋 Copy Decklist Text</button>
+                        </div>
+                    </div>
+                </div>
+                
                 <div id="deck-container" class="cards-grid"></div>
             </div>
         </div>

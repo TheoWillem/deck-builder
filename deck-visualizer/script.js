@@ -7,13 +7,13 @@ class DeckVisualizer {
         this.secondaryFaction = '';
         this.availableCardsContainer = document.getElementById('available-cards');
         this.deckContainer = document.getElementById('deck-container');
-        this.deckUrlInput = document.getElementById('deck-url');
         this.deckCountSpan = document.getElementById('deck-count');
-        this.factionFilter = document.getElementById('faction-filter');
+        this.factionFilterButton = document.getElementById('faction-filter-button');
+        this.factionFilterList = document.getElementById('faction-filter-list');
+        this.selectedFactions = new Set(['']); // '' = toutes les factions
         this.searchFilter = document.getElementById('search-filter');
         this.sortFilter = document.getElementById('sort-filter');
         this.orderFilter = document.getElementById('order-filter');
-        this.deckNameInput = document.getElementById('deck-name');
         this.primaryFactionSelect = document.getElementById('primary-faction');
         this.secondaryFactionSelect = document.getElementById('secondary-faction');
         
@@ -77,8 +77,8 @@ class DeckVisualizer {
         const availableCardsGrid = document.getElementById('available-cards');
         const deckContainer = document.getElementById('deck-container');
         
-        availableCardsGrid.innerHTML = '<div class="loading-message">🃏 Chargement des cartes...</div>';
-        deckContainer.innerHTML = '<div class="loading-message">🃏 Préparation du deck...</div>';
+        availableCardsGrid.innerHTML = '<div class="loading-message">🃏 Loading cards...</div>';
+        deckContainer.innerHTML = '<div class="loading-message">🃏 Preparing deck...</div>';
         
         const csvFiles = [
             { file: 'C&T Cards 2 - Augur Order.csv', faction: 'AO' },
@@ -107,12 +107,17 @@ class DeckVisualizer {
         }
 
         // Afficher un message de chargement des images
-        availableCardsGrid.innerHTML = '<div class="loading-message">🖼️ Chargement des images...</div>';
+        availableCardsGrid.innerHTML = '<div class="loading-message">🃏 Loading cards...</div>';
         
-        // Charger toutes les images en une seule fois
-        await this.setImagePathsAsync(allCards);
+        // Filtrer les tokens, cantrips, banes et boons avant de charger les images
+        const playableCards = allCards.filter(card => this.isPlayableCard(card));
 
-        return allCards;
+        console.log(`Filtered out ${allCards.length - playableCards.length} tokens, cantrips, banes and boons`);
+
+        // Charger toutes les images en une seule fois
+        await this.setImagePathsAsync(playableCards);
+
+        return playableCards;
     }
 
     async buildImageIndex() {
@@ -157,6 +162,15 @@ class DeckVisualizer {
             .replace(/"/g, '"') // Remplace les guillemets courbes
             .replace(/–/g, '-') // Remplace les tirets longs
             .replace(/—/g, '-'); // Remplace les tirets cadratin
+    }
+
+    isPlayableCard(card) {
+        // Vérifie si une carte peut être jouée (exclut tokens, cantrips, banes, boons)
+        if (card.type) {
+            const cardType = card.type.toLowerCase();
+            return !(cardType.includes('token') || cardType.includes('cantrip') || cardType.includes('bane') || cardType.includes('boon'));
+        }
+        return true;
     }
 
     async getImagePath(cardName, faction) {
@@ -390,9 +404,19 @@ class DeckVisualizer {
         // Copy URL
         document.getElementById('copy-url').addEventListener('click', (e) => {
             this.animateButtonPress(e.target);
-            this.deckUrlInput.select();
-            document.execCommand('copy');
-            this.showToast('URL copied!');
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                this.showToast('URL copied!');
+            }).catch(() => {
+                // Fallback pour les navigateurs plus anciens
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                this.showToast('URL copied!');
+            });
         });
 
         // Copy Decklist
@@ -413,10 +437,8 @@ class DeckVisualizer {
             this.updateURL();
         });
 
-        // Filters - Updates ONLY the collection, the deck remains unchanged
-        this.factionFilter.addEventListener('change', () => {
-            this.displayAvailableCards(); // Only the collection is updated
-        });
+        // Setup faction filter dropdown
+        this.setupFactionFilterEvents();
 
         this.searchFilter.addEventListener('input', () => {
             this.displayAvailableCards(); // Only the collection is updated
@@ -430,11 +452,7 @@ class DeckVisualizer {
             this.displayAvailableCards(); // Only the collection is updated
         });
 
-        // Deck info listeners
-        this.deckNameInput.addEventListener('input', () => {
-            this.deckName = this.deckNameInput.value;
-            this.updateURL();
-        });
+
 
         this.primaryFactionSelect.addEventListener('change', () => {
             this.primaryFaction = this.primaryFactionSelect.value;
@@ -451,6 +469,29 @@ class DeckVisualizer {
         // Listen for URL changes
         window.addEventListener('hashchange', () => {
             this.loadDeckFromURL();
+        });
+
+        // Deck title input
+        const deckTitle = document.getElementById('deck-title');
+        
+        deckTitle.addEventListener('input', () => {
+            this.deckName = deckTitle.value.trim();
+            this.updateURL();
+        });
+
+        deckTitle.addEventListener('blur', () => {
+            if (!deckTitle.value.trim()) {
+                this.deckName = '';
+                this.updateURL();
+            }
+        });
+
+        // Validation avec la touche Entrée
+        deckTitle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                deckTitle.blur(); // Sort du focus
+            }
         });
     }
 
@@ -510,6 +551,13 @@ class DeckVisualizer {
         const card = this.cards.find(c => c.name === cardName);
         if (!card) return;
         
+        // Exclure les cartes tokens, cantrips, banes et boons
+        if (!this.isPlayableCard(card)) {
+            this.shakeCard(card.id);
+            this.showCardPopup(card.id, 'Tokens, cantrips, banes and boons cannot be added to deck');
+            return;
+        }
+        
         // Check if the card can be added according to the selected factions
         const allowedFactions = [this.primaryFaction, this.secondaryFaction, 'N'].filter(f => f);
         if (!allowedFactions.includes(card.faction)) {
@@ -518,8 +566,16 @@ class DeckVisualizer {
         
         const currentQuantity = this.currentDeck[cardName] || 0;
         
-        // Check maximum 3 copies per card
-        if (currentQuantity >= 3) {
+        // Check legendary card restriction (only 1 copy allowed)
+        if (card.rarity === 'Legendary' && currentQuantity >= 1) {
+            console.log('Max 1 copy reached for legendary card', card.name, card.id);
+            this.shakeCard(card.id);
+            this.showCardPopup(card.id, 'Maximum 1 copy per legendary card');
+            return;
+        }
+        
+        // Check maximum 3 copies per card (non-legendary)
+        if (card.rarity !== 'Legendary' && currentQuantity >= 3) {
             console.log('Max 3 copies reached for', card.name, card.id);
             this.shakeCard(card.id);
             this.showCardPopup(card.id, 'Maximum 3 copies per card');
@@ -674,9 +730,12 @@ class DeckVisualizer {
     }
 
     updateDeckInfo() {
-        this.deckNameInput.value = this.deckName;
         this.primaryFactionSelect.value = this.primaryFaction;
         this.secondaryFactionSelect.value = this.secondaryFaction;
+        
+        // Synchroniser le titre input
+        const deckTitle = document.getElementById('deck-title');
+        deckTitle.value = this.deckName || '';
     }
 
     displayAvailableCards() {
@@ -706,13 +765,22 @@ class DeckVisualizer {
             return;
         }
 
-        const deckHTML = Object.entries(this.currentDeck)
+        // Créer un tableau de cartes avec leurs quantités et les trier par mana
+        const deckCards = Object.entries(this.currentDeck)
             .map(([cardName, quantity]) => {
                 const card = this.cards.find(c => c.name === cardName);
-                if (!card) return '';
-                return this.generateCardHTML(card, quantity);
+                return card ? { card, quantity } : null;
             })
-            .filter(html => html !== '')
+            .filter(item => item !== null)
+            .sort((a, b) => {
+                // Tri principal par coût de mana croissant
+                const manaDiff = a.card.cost - b.card.cost;
+                // Tri secondaire par nom si même coût de mana
+                return manaDiff !== 0 ? manaDiff : a.card.name.localeCompare(b.card.name);
+            });
+
+        const deckHTML = deckCards
+            .map(({ card, quantity }) => this.generateCardHTML(card, quantity))
             .join('');
 
         grid.innerHTML = deckHTML;
@@ -770,9 +838,8 @@ class DeckVisualizer {
     }
 
     updateDeckURL() {
-        const baseUrl = window.location.origin + window.location.pathname;
-        const hash = window.location.hash;
-        this.deckUrlInput.value = baseUrl + hash;
+        // Cette méthode n'est plus nécessaire car on n'affiche plus l'URL
+        // On garde juste pour éviter les erreurs de référence
     }
 
     updateDeckCount() {
@@ -799,6 +866,8 @@ class DeckVisualizer {
     }
 
     populateFactionFilter() {
+        // Les factions sont maintenant définies directement dans le HTML
+        // On garde juste le code pour les selects de primary/secondary faction
         const factions = [
             { code: 'DM', emoji: '🟣', name: 'Dungeon Master' },
             { code: 'PG', emoji: '🔴', name: 'Plundering Guild' },
@@ -806,14 +875,6 @@ class DeckVisualizer {
             { code: 'AO', emoji: '🔵', name: 'Augur Order' },
             { code: 'N', emoji: '⚫', name: 'Neutral' }
         ];
-        
-        this.factionFilter.innerHTML = '<option value="">🌈 All Factions</option>';
-        factions.forEach(faction => {
-            const option = document.createElement('option');
-            option.value = faction.code;
-            option.textContent = `${faction.emoji} ${faction.name}`;
-            this.factionFilter.appendChild(option);
-        });
 
         // Populate primary and secondary faction selects
         const primaryAndSecondaryFactions = factions.filter(f => f.code !== 'N'); // Exclude Neutral as primary/secondary
@@ -822,6 +883,86 @@ class DeckVisualizer {
         
         this.primaryFactionSelect.innerHTML = factionOptions;
         this.secondaryFactionSelect.innerHTML = factionOptions;
+    }
+
+    setupFactionFilterEvents() {
+        // Gestion du clic sur le bouton pour ouvrir/fermer le dropdown
+        this.factionFilterButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const dropdown = this.factionFilterButton.parentElement;
+            dropdown.classList.toggle('open');
+        });
+
+        // Fermer le dropdown quand on clique ailleurs
+        document.addEventListener('click', (e) => {
+            const dropdown = this.factionFilterButton.parentElement;
+            if (!dropdown.contains(e.target)) {
+                dropdown.classList.remove('open');
+            }
+        });
+
+        // Gestion des checkboxes
+        const checkboxes = this.factionFilterList.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                this.handleFactionSelection(checkbox);
+            });
+        });
+    }
+
+    handleFactionSelection(checkbox) {
+        if (checkbox.id === 'faction-all') {
+            // Si "All Factions" est sélectionné, décocher toutes les autres
+            if (checkbox.checked) {
+                this.selectedFactions.clear();
+                this.selectedFactions.add('');
+                const otherCheckboxes = this.factionFilterList.querySelectorAll('input[type="checkbox"]:not(#faction-all)');
+                otherCheckboxes.forEach(cb => cb.checked = false);
+            }
+        } else {
+            // Si une faction spécifique est sélectionnée, décocher "All Factions"
+            if (checkbox.checked) {
+                this.selectedFactions.delete('');
+                this.selectedFactions.add(checkbox.value);
+                document.getElementById('faction-all').checked = false;
+            } else {
+                this.selectedFactions.delete(checkbox.value);
+                // Si aucune faction n'est sélectionnée, cocher "All Factions"
+                if (this.selectedFactions.size === 0) {
+                    this.selectedFactions.add('');
+                    document.getElementById('faction-all').checked = true;
+                }
+            }
+        }
+
+        this.updateFactionFilterText();
+        this.displayAvailableCards();
+    }
+
+    updateFactionFilterText() {
+        const textSpan = this.factionFilterButton.querySelector('.faction-filter-text');
+        
+        if (this.selectedFactions.has('')) {
+            textSpan.textContent = '🌈 All Factions';
+        } else {
+            const factionNames = {
+                'DM': '🟣 DM',
+                'PG': '🔴 PG', 
+                'WH': '🟢 WH',
+                'AO': '🔵 AO',
+                'N': '⚫ N'
+            };
+            
+            const selectedNames = Array.from(this.selectedFactions)
+                .map(code => factionNames[code])
+                .join(', ');
+            
+            if (selectedNames.length > 20) {
+                textSpan.textContent = `${this.selectedFactions.size} factions`;
+            } else {
+                textSpan.textContent = selectedNames;
+            }
+        }
     }
 
     showToast(message) {
@@ -1004,7 +1145,7 @@ class DeckVisualizer {
                 if (!cardsByFaction[factionName]) {
                     cardsByFaction[factionName] = [];
                 }
-                cardsByFaction[factionName].push({ name: cardName, quantity });
+                cardsByFaction[factionName].push({ name: cardName, quantity, card });
             }
         }
 
@@ -1016,9 +1157,12 @@ class DeckVisualizer {
             if (cardsByFaction[factionName]) {
                 decklistText += `${factionName} cards:\n`;
                 
-                // Sort cards alphabetically within each faction
+                // Sort cards by mana cost then alphabetically within each faction
                 cardsByFaction[factionName]
-                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .sort((a, b) => {
+                        const manaDiff = a.card.cost - b.card.cost;
+                        return manaDiff !== 0 ? manaDiff : a.name.localeCompare(b.name);
+                    })
                     .forEach(card => {
                         decklistText += `${card.quantity}x ${card.name}\n`;
                     });
@@ -1078,13 +1222,18 @@ class DeckVisualizer {
     }
 
     getFilteredCards() {
-        const factionFilter = this.factionFilter.value;
         const searchTerm = this.searchFilter.value.toLowerCase();
         const sortBy = this.sortFilter.value;
         const sortOrder = this.orderFilter.value;
 
         let filteredCards = this.cards.filter(card => {
-            const matchesFaction = !factionFilter || card.faction === factionFilter;
+            // Exclure les cartes tokens, cantrips, banes et boons
+            if (!this.isPlayableCard(card)) {
+                return false;
+            }
+            
+            // Vérifier si la faction de la carte est dans les factions sélectionnées
+            const matchesFaction = this.selectedFactions.has('') || this.selectedFactions.has(card.faction);
             const matchesSearch = !searchTerm || 
                 card.name.toLowerCase().includes(searchTerm) ||
                 (card.type && card.type.toLowerCase().includes(searchTerm)) ||
