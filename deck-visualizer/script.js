@@ -571,7 +571,9 @@ class DeckVisualizer {
         
         // Click to ADD to deck (the card REMAINS in the collection)
         grid.querySelectorAll('.card').forEach(cardElement => {
-            cardElement.addEventListener('click', () => {
+            cardElement.addEventListener('click', (e) => {
+                e.preventDefault(); // Empêche le comportement par défaut du navigateur
+                e.stopPropagation(); // Empêche la propagation de l'événement
                 const cardId = parseInt(cardElement.dataset.cardId);
                 const card = this.cards.find(c => c.id === cardId);
                 if (card) {
@@ -614,13 +616,16 @@ class DeckVisualizer {
             const card = this.cards.find(c => c.id === cardId);
             
             if (card) {
-                cardElement.addEventListener('click', () => {
+                cardElement.addEventListener('click', (e) => {
+                    e.preventDefault(); // Empêche le comportement par défaut du navigateur
+                    e.stopPropagation(); // Empêche la propagation de l'événement
                     this.removeCardFromDeck(card.name);
                 });
 
                 const removeBtn = cardElement.querySelector('.remove-btn');
                 if (removeBtn) {
                     removeBtn.addEventListener('click', (e) => {
+                        e.preventDefault(); // Empêche le comportement par défaut du navigateur
                         e.stopPropagation();
                         this.animateButtonPress(removeBtn);
                         this.removeCardFromDeck(card.name);
